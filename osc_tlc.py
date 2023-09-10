@@ -4,22 +4,6 @@ from pythonosc.udp_client import SimpleUDPClient
 from pythonosc import dispatcher, osc_server
 import RPi.GPIO as GPIO
 import time
-import board
-import busio
-import digitalio
-
-import adafruit_tlc5947
-
-# Define pins connected to the TLC5947
-SCK = board.SCK
-MOSI = board.MOSI
-LATCH = digitalio.DigitalInOut(board.D27)
-
-# Initialize SPI bus.
-spi = busio.SPI(clock=SCK, MOSI=MOSI)
-
-# Initialize TLC5947
-tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
 
 # Configura el cliente OSC
 client = SimpleUDPClient("192.168.15.6", 10000)  # Cambia la dirección y el puerto según tus necesidades
@@ -32,11 +16,6 @@ LED_PIN_3 = 26  # Cambia el número de pin según tu configuración
 GPIO.setup(LED_PIN_1, GPIO.OUT)
 GPIO.setup(LED_PIN_2, GPIO.OUT)
 GPIO.setup(LED_PIN_3, GPIO.OUT)
-
-red = tlc5947.create_pwm_out(0)
-green = tlc5947.create_pwm_out(1)
-blue = tlc5947.create_pwm_out(2)
-
 
 # Configurar PWM para el LED controlado por el canal /ch2
 pwm = GPIO.PWM(LED_PIN_2, 100)  # Pin 22 con frecuencia de 100 Hz (puedes ajustarla según tu necesidad)
@@ -63,7 +42,7 @@ def manejar_led(address, *args):
     elif address == "/ch2":
         # El valor flotante recibido controlará el ciclo de trabajo del PWM
         duty_cycle = float(args[0])
-        green.duty_cycle(duty_cycle)
+        pwm.ChangeDutyCycle(duty_cycle)
     elif address == "/ch3":
         pin = LED_PIN_3
 
