@@ -16,6 +16,7 @@ def control_led():
     try:
         while True:
             timestamp = time.time()
+            print(timestamp)
             if timestamp == timestamp%1:
                 # Enciende el LED
                 GPIO.output(puerto_gpio, GPIO.HIGH)
