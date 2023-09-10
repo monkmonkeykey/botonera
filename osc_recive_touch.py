@@ -22,25 +22,16 @@ led = tlc5947.create_pwm_out(1)
 
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
 def manejar_led(address, *args):
-    #print(f"Recibido mensaje desde {address}: {args}")
-    pin = None
+    
     if address == "/ch1":
-        print(args[0])
+            print(args[0])
     elif address == "/ch2":
-        pwm_value = int(args[0])  # Ejemplo: establece el LED al 50% de brillo
-
-        # Establece el valor de ciclo de trabajo PWM para el LED
+        pwm_value = int(args[0])
         led.duty_cycle = pwm_value
-
-        # Llama al método write para aplicar el cambio
-        tlc5947.write()
-        # El valor flotante recibido controlará el ciclo de trabajo del PWM
-    #print(f"{address}: {args}")
+        
     elif address == "/ch3":
         print(args[0])
-    if pin is not None:
-        print("no pasa nada oiga")
-
+tlc5947.write()
 # Resto del código sin cambios
 
 # Crea un despachador de mensajes OSC
