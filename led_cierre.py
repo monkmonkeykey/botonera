@@ -16,7 +16,7 @@ GPIO.setup(MOSI_PIN, GPIO.OUT)
 GPIO.setup(LATCH_PIN, GPIO.OUT)
 
 # Inicializar la interfaz SPI
-spi = busio.SPI(clock=GPIO.SCK, MOSI=GPIO.MOSI)
+spi = busio.SPI(clock=SCK_PIN, MOSI=MOSI_PIN)
 
 # Inicializar TLC5947
 tlc5947 = adafruit_tlc5947.TLC5947(spi, digitalio.DigitalInOut(LATCH_PIN))
