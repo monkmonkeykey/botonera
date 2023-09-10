@@ -18,8 +18,11 @@ GPIO.setup(LATCH_PIN, GPIO.OUT)
 # Inicializar la interfaz SPI
 spi = busio.SPI(clock=SCK_PIN, MOSI=MOSI_PIN)
 
+# Crear objeto Pin para el pin de LATCH
+latch_pin = GPIO.LATCH_PIN
+
 # Inicializar TLC5947
-tlc5947 = adafruit_tlc5947.TLC5947(spi, digitalio.DigitalInOut(LATCH_PIN))
+tlc5947 = adafruit_tlc5947.TLC5947(spi, digitalio.DigitalInOut(latch_pin))
 
 # Crear objetos PWMOut para cada canal (LED)
 red = tlc5947.create_pwm_out(0)
