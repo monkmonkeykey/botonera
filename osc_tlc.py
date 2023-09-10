@@ -1,33 +1,41 @@
-# -*- coding: utf-8 -*-
-import threading
-from pythonosc.udp_client import SimpleUDPClient
-from pythonosc import dispatcher, osc_server
-import RPi.GPIO as GPIO
-import time
+import board
+import busio
+import digitalio
+from digitalio import DigitalInOut, Direction, Pull
+
+import adafruit_tlc5947
 
 # Configura el cliente OSC
 client = SimpleUDPClient("192.168.15.6", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
 # Configurar pines GPIO para los LEDs
-GPIO.setmode(GPIO.BCM)
-LED_PIN_1 = 22  # Cambia el número de pin según tu configuración
-LED_PIN_2 = 23  # Cambia el número de pin según tu configuración
-LED_PIN_3 = 26  # Cambia el número de pin según tu configuración
-GPIO.setup(LED_PIN_1, GPIO.OUT)
-GPIO.setup(LED_PIN_2, GPIO.OUT)
-GPIO.setup(LED_PIN_3, GPIO.OUT)
+LED_PIN_1 = board.D22  # Cambia el número de pin según tu configuración
+LED_PIN_2 = board.D23  # Cambia el número de pin según tu configuración
+LED_PIN_3 = board.D26  # Cambia el número de pin según tu configuración
+
+# Inicializa los pines GPIO de los LEDs
+led1 = DigitalInOut(LED_PIN_1)
+led1.direction = Direction.OUTPUT
+led2 = DigitalInOut(LED_PIN_2)
+led2.direction = Direction.OUTPUT
+led3 = DigitalInOut(LED_PIN_3)
+led3.direction = Direction.OUTPUT
 
 # Configurar PWM para el LED controlado por el canal /ch2
-pwm = GPIO.PWM(LED_PIN_2, 100)  # Pin 22 con frecuencia de 100 Hz (puedes ajustarla según tu necesidad)
-pwm.start(0)  # Iniciar PWM con ciclo de trabajo del 0%
+pwm = board.D22  # Cambia el número de pin según tu configuración
+pwm_out = DigitalInOut(pwm)
+pwm_out.direction = Direction.OUTPUT
+pwm_out.frequency = 100
+pwm_out.duty_cycle = 0  # Iniciar PWM con ciclo de trabajo del 0%
 
 # Configura los pines GPIO de los botones
-PINES_BOTONES = [17, 18, 24, 25, 5, 6, 16, 19]
+PINES_BOTONES = [board.D17, board.D18, board.D24, board.D25, board.D5, board.D6, board.D16, board.D19]
 
-GPIO.setmode(GPIO.BCM)
-
-for pin in PINES_BOTONES:
-    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# Inicializa los pines GPIO de los botones
+buttons = [DigitalInOut(pin) for pin in PINES_BOTONES]
+for button in buttons:
+    button.direction = Direction.INPUT
+    button.pull = Pull.UP
 
 # Define una función para enviar un mensaje OSC
 def enviar_mensaje_osc(address, *args):
@@ -38,19 +46,19 @@ def manejar_led(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
-        pin = LED_PIN_1
+        pin = led1
     elif address == "/ch2":
         # El valor flotante recibido controlará el ciclo de trabajo del PWM
         duty_cycle = float(args[0])
-        pwm.ChangeDutyCycle(duty_cycle)
+        pwm_out.duty_cycle = int(duty_cycle * 65535)  # Escala el valor al rango 0-65535
     elif address == "/ch3":
-        pin = LED_PIN_3
+        pin = led3
 
     if pin is not None:
         if args[0] == 1:
-            GPIO.output(pin, GPIO.HIGH)
+            pin.value = True
         else:
-            GPIO.output(pin, GPIO.LOW)
+            pin.value = False
 
 # Variables para el seguimiento del estado anterior de los botones
 estado_anterior = [1] * len(PINES_BOTONES)
@@ -74,8 +82,8 @@ servidor = osc_server.ThreadingOSCUDPServer((ip_escucha, puerto_escucha), dispat
 def leer_botones():
     try:
         while True:
-            for i, pin in enumerate(PINES_BOTONES):
-                estado_boton = GPIO.input(pin)
+            for i, button in enumerate(buttons):
+                estado_boton = not button.value  # Lee el estado y lo invierte (botón pull-up)
 
                 # Verifica si ha habido un cambio en el estado del botón
                 if estado_boton != estado_anterior[i]:
@@ -88,16 +96,7 @@ def leer_botones():
             time.sleep(0.1)  # Pequeña pausa para evitar lecturas repetidas
 
     except KeyboardInterrupt:
-        GPIO.cleanup()
+        pass  # Manejo de la excepción para una salida limpia
 
-# Iniciar el servidor en un hilo separado
-servidor_thread = threading.Thread(target=servidor.serve_forever)
-servidor_thread.start()
-
-# Iniciar la lectura de botones en otro hilo
-botones_thread = threading.Thread(target=leer_botones)
-botones_thread.start()
-
-# Esperar que los hilos terminen (esto podría ser en otro hilo o proceso si es necesario)
-servidor_thread.join()
-botones_thread.join()
+finally:
+    GPIO.cleanup()  # Limpia los pines GPIO cuando se termina el programa
