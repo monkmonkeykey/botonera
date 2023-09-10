@@ -14,6 +14,7 @@ GPIO.setup(LED_PIN_3, GPIO.OUT)
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
 def manejar_mensaje_1(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
+    print(type({args}))
     if args[0] == 1:
         GPIO.output(LED_PIN_1, GPIO.HIGH)
     else:
