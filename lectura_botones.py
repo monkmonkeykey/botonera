@@ -29,7 +29,7 @@ while True:
         estado_del_boton = pin.value
 
         # Imprime el estado del botón
-        print(f"Estado del botón {i + 1}: {estado_del_boton}")
+        #print(f"Estado del botón {i + 1}: {estado_del_boton}")
 
         # Envia el estado del botón vía OSC
         client.send_message(f"/boton{i + 1}", estado_del_boton)
