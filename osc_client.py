@@ -1,3 +1,4 @@
+import threading
 from pythonosc import dispatcher, osc_server
 
 # Define funciones para manejar los mensajes OSC
@@ -14,9 +15,9 @@ def manejar_mensaje_3(address, *args):
 dispatcher = dispatcher.Dispatcher()
 
 # Asocia las direcciones OSC con las funciones de manejo
-dispatcher.map("ch1", manejar_mensaje_1)
-dispatcher.map("ch2", manejar_mensaje_2)
-dispatcher.map("ch3", manejar_mensaje_3)
+dispatcher.map("/ch1", manejar_mensaje_1)
+dispatcher.map("/ch2", manejar_mensaje_2)
+dispatcher.map("/ch3", manejar_mensaje_3)
 
 # Configura y corre el servidor OSC en hilos separados
 ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
