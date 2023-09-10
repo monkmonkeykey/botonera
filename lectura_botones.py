@@ -1,7 +1,16 @@
 import board
 import digitalio
+from pythonosc.udp_client import SimpleUDPClient
+import time
 
+
+# Configura el cliente OSC
+client = SimpleUDPClient("192.168.15.7", 10000)  # Cambia la dirección y el puerto según tus necesidades
 # Configura los pines de los botones como entradas digitales
+
+def enviar_mensaje_osc(address, *args):
+    client.send_message(address, args)
+    
 pines_de_botones = [
     digitalio.DigitalInOut(board.D17),
     digitalio.DigitalInOut(board.D18),
