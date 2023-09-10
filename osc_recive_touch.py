@@ -25,7 +25,7 @@ def manejar_led(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
-        #print(f"{address}: {args}")
+        print(f"{address}: {args}")
     elif address == "/ch2":
         print({args})
         pwm_value = 32767  # Ejemplo: establece el LED al 50% de brillo
