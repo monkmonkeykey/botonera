@@ -15,19 +15,17 @@ GPIO.setup(puerto_gpio, GPIO.OUT)
 def control_led():
     try:
         while True:
-            # Enciende el LED
-            GPIO.output(puerto_gpio, GPIO.HIGH)
-            print("LED encendido")
-    
+            timestamp = time.time()
+            if timestamp == timestamp%1:
+                # Enciende el LED
+                GPIO.output(puerto_gpio, GPIO.HIGH)
+                print("LED encendido")
+        
             # Espera durante 5 segundos
-            time.sleep(5)
-    
+            elif timestamp == timestamp%1:
             # Apaga el LED
-            GPIO.output(puerto_gpio, GPIO.LOW)
-            print("LED apagado")
-    
-            # Espera durante 5 segundos antes de repetir
-            time.sleep(5)
+                GPIO.output(puerto_gpio, GPIO.LOW)
+                print("LED apagado")
     
     except KeyboardInterrupt:
         pass
