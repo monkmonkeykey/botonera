@@ -63,7 +63,7 @@ def manejar_led(address, *args):
     elif address == "/ch2":
         # El valor flotante recibido controlará el ciclo de trabajo del PWM
         duty_cycle = float(args[0])
-        pwm.duty_cycle(duty_cycle)
+        green.duty_cycle(duty_cycle)
     elif address == "/ch3":
         pin = LED_PIN_3
 
