@@ -2,7 +2,8 @@ import board
 import busio
 import digitalio
 from digitalio import DigitalInOut, Direction, Pull
-
+from pythonosc.udp_client import SimpleUDPClient
+from pythonosc import dispatcher, osc_server
 import adafruit_tlc5947
 
 # Configura el cliente OSC
