@@ -3,14 +3,10 @@ import digitalio
 from pythonosc.udp_client import SimpleUDPClient
 import time
 
-
 # Configura el cliente OSC
 client = SimpleUDPClient("192.168.15.7", 10000)  # Cambia la dirección y el puerto según tus necesidades
-# Configura los pines de los botones como entradas digitales
 
-def enviar_mensaje_osc(address, *args):
-    client.send_message(address, args)
-    
+# Configura los pines de los botones como entradas digitales
 pines_de_botones = [
     digitalio.DigitalInOut(board.D17),
     digitalio.DigitalInOut(board.D18),
@@ -28,8 +24,15 @@ for pin in pines_de_botones:
     pin.pull = digitalio.Pull.DOWN  # Opcional: configura la resistencia pull-down si es necesario
 
 while True:
-    # Lee el estado de cada botón y almacénalo en una lista
-    estados_de_botones = [pin.value for pin in pines_de_botones]
+    for i, pin in enumerate(pines_de_botones):
+        # Lee el estado de un botón específico
+        estado_del_boton = pin.value
 
-    # Imprime los estados de los botones
-    print("Estados de los botones:", estados_de_botones)
+        # Imprime el estado del botón
+        print(f"Estado del botón {i + 1}: {estado_del_boton}")
+
+        # Envia el estado del botón vía OSC
+        client.send_message(f"/boton{i + 1}", estado_del_boton)
+
+    # Espera un tiempo antes de volver a leer los botones
+    time.sleep(0.1)  # Puedes ajustar el tiempo de espera según tus necesidades
