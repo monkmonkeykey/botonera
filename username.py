@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 
 # Obtén el nombre de usuario actual
