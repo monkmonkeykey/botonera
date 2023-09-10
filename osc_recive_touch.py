@@ -27,8 +27,7 @@ def manejar_led(address, *args):
     if address == "/ch1":
         print("hola ch1")
     elif address == "/ch2":
-        print({args})
-        pwm_value = 32767  # Ejemplo: establece el LED al 50% de brillo
+        pwm_value = float(args[0])  # Ejemplo: establece el LED al 50% de brillo
 
         # Establece el valor de ciclo de trabajo PWM para el LED
         led.duty_cycle = pwm_value
