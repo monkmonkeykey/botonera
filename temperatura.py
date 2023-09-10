@@ -12,5 +12,6 @@ temperatura_actual = obtener_temperatura_cpu()
 
 if temperatura_actual is not None:
     print(f"La temperatura de la CPU es de {temperatura_actual} grados Celsius.")
+    print(type(temperatura_actual))
 else:
     print("No se pudo obtener la temperatura de la CPU.")
