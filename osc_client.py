@@ -16,7 +16,7 @@ def manejar_mensaje_1(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     estado_led_uno = int(args[0])
     print(estado_led_uno)
-    if estado_led_uno == 1:
+    if args[0] == 1:
         GPIO.output(LED_PIN_1, GPIO.HIGH)
     else:
         GPIO.output(LED_PIN_1, GPIO.LOW)
