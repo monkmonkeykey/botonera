@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pythonosc.udp_client import SimpleUDPClient
 import RPi.GPIO as GPIO
 import time
