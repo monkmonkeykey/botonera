@@ -4,18 +4,20 @@ import RPi.GPIO as GPIO
 
 # Configurar pines GPIO para los LEDs
 GPIO.setmode(GPIO.BCM)
-LED_PIN_1 = 23  # Cambia el número de pin según tu configuración
-LED_PIN_2 = 22  # Cambia el número de pin según tu configuración
+LED_PIN_1 = 22  # Cambia el número de pin según tu configuración
+LED_PIN_2 = 23  # Cambia el número de pin según tu configuración
 LED_PIN_3 = 26  # Cambia el número de pin según tu configuración
 GPIO.setup(LED_PIN_1, GPIO.OUT)
 GPIO.setup(LED_PIN_2, GPIO.OUT)
 GPIO.setup(LED_PIN_3, GPIO.OUT)
 
+# Configurar PWM para el LED controlado por el canal /ch2
+pwm = GPIO.PWM(LED_PIN_2, 100)  # Pin 22 con frecuencia de 100 Hz (puedes ajustarla según tu necesidad)
+pwm.start(0)  # Iniciar PWM con ciclo de trabajo del 0%
+
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
 def manejar_mensaje_1(address, *args):
-    #print(f"Recibido mensaje desde {address}: {args}")
-    estado_led_uno = int(args[0])
-    print(estado_led_uno)
+    print(f"Recibido mensaje desde {address}: {args}")
     if args[0] == 1:
         GPIO.output(LED_PIN_1, GPIO.HIGH)
     else:
@@ -23,10 +25,9 @@ def manejar_mensaje_1(address, *args):
 
 def manejar_mensaje_2(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
-    if args[0] == 1:
-        GPIO.output(LED_PIN_2, GPIO.HIGH)
-    else:
-        GPIO.output(LED_PIN_2, GPIO.LOW)
+    # El valor flotante recibido controlará el ciclo de trabajo del PWM
+    duty_cycle = float(args[0])
+    pwm.ChangeDutyCycle(duty_cycle)
 
 def manejar_mensaje_3(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
