@@ -19,7 +19,9 @@ tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
 # Crea un objeto PWMOut para el LED (en este ejemplo, el LED está conectado al canal 0)
 led = tlc5947.create_pwm_out(1)
 
-
+def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
+    valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
+    return valor_mapeado
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
 def manejar_led(address, *args):
     
@@ -56,6 +58,4 @@ servidor_thread.start()
 # Esperar que el servidor termine (esto podría ser en otro hilo o proceso si es necesario)
 servidor_thread.join()
 
-def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
-    valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
-    return valor_mapeado
+
