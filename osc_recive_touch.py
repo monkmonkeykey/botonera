@@ -17,7 +17,7 @@ spi = busio.SPI(clock=SCK, MOSI=MOSI)
 # Inicializa el controlador TLC5947
 tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
 # Crea un objeto PWMOut para el LED (en este ejemplo, el LED está conectado al canal 0)
-led = tlc5947.create_pwm_out(0)
+led = tlc5947.create_pwm_out(1)
 
 
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
@@ -25,7 +25,7 @@ def manejar_led(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
-        print(f"{address}: {args}")
+        #print(f"{address}: {args}")
     elif address == "/ch2":
         print({args})
         pwm_value = 32767  # Ejemplo: establece el LED al 50% de brillo
@@ -65,3 +65,4 @@ servidor_thread.start()
 
 # Esperar que el servidor termine (esto podría ser en otro hilo o proceso si es necesario)
 servidor_thread.join()
+
