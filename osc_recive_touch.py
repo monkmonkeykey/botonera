@@ -5,7 +5,19 @@ import busio
 import digitalio
 import adafruit_tlc5947
 
-# Configurar pines GPIO para los LEDs
+
+# Define los pines conectados al TLC5947
+SCK = board.SCK
+MOSI = board.MOSI
+LATCH = digitalio.DigitalInOut(board.D27)
+
+# Inicializa el bus SPI.
+spi = busio.SPI(clock=SCK, MOSI=MOSI)
+
+# Inicializa el controlador TLC5947
+tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
+# Crea un objeto PWMOut para el LED (en este ejemplo, el LED está conectado al canal 0)
+led = tlc5947.create_pwm_out(0)
 
 
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
@@ -15,6 +27,13 @@ def manejar_led(address, *args):
     if address == "/ch1":
         print(f"{address}: {args}")
     elif address == "/ch2":
+        pwm_value = float({args}) # Ejemplo: establece el LED al 50% de brillo
+
+        # Establece el valor de ciclo de trabajo PWM para el LED
+        led.duty_cycle = pwm_value
+
+        # Llama al método write para aplicar el cambio
+        tlc5947.write()
         # El valor flotante recibido controlará el ciclo de trabajo del PWM
         print(f"{address}: {args}")
     elif address == "/ch3":
