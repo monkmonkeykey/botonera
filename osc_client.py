@@ -4,8 +4,8 @@ import RPi.GPIO as GPIO
 
 # Configurar pines GPIO para los LEDs
 GPIO.setmode(GPIO.BCM)
-LED_PIN_1 = 22  # Cambia el número de pin según tu configuración
-LED_PIN_2 = 23  # Cambia el número de pin según tu configuración
+LED_PIN_1 = 23  # Cambia el número de pin según tu configuración
+LED_PIN_2 = 22  # Cambia el número de pin según tu configuración
 LED_PIN_3 = 26  # Cambia el número de pin según tu configuración
 GPIO.setup(LED_PIN_1, GPIO.OUT)
 GPIO.setup(LED_PIN_2, GPIO.OUT)
