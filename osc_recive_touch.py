@@ -25,7 +25,7 @@ def manejar_led(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
-        print(f"{address}: {args}")
+        print("hola ch1")
     elif address == "/ch2":
         print({args})
         pwm_value = 32767  # Ejemplo: establece el LED al 50% de brillo
@@ -38,7 +38,7 @@ def manejar_led(address, *args):
         # El valor flotante recibido controlará el ciclo de trabajo del PWM
         print(f"{address}: {args}")
     elif address == "/ch3":
-        print(f"{address}: {args}")
+        print("hola ch3")
     if pin is not None:
         print("no pasa nada oiga")
 
