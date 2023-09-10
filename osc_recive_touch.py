@@ -25,7 +25,7 @@ def manejar_led(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
-        print("hola ch1")
+        print(args[0])
     elif address == "/ch2":
         pwm_value = int(args[0])  # Ejemplo: establece el LED al 50% de brillo
 
@@ -35,9 +35,9 @@ def manejar_led(address, *args):
         # Llama al método write para aplicar el cambio
         tlc5947.write()
         # El valor flotante recibido controlará el ciclo de trabajo del PWM
-        print(f"{address}: {args}")
+    #print(f"{address}: {args}")
     elif address == "/ch3":
-        print("hola ch3")
+        print(args[0])
     if pin is not None:
         print("no pasa nada oiga")
 
