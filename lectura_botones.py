@@ -2,7 +2,7 @@ import board
 import digitalio
 
 # Configura el pin del botón como una entrada digital
-pin_del_boton = digitalio.DigitalInOut(board.D2)  # Cambia D2 al número de pin que estés usando
+pin_del_boton = digitalio.DigitalInOut(board.D17)  # Cambia D2 al número de pin que estés usando
 pin_del_boton.direction = digitalio.Direction.INPUT
 pin_del_boton.pull = digitalio.Pull.DOWN  # Opcional: configura la resistencia pull-down si es necesario
 
