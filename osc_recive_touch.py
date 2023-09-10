@@ -31,7 +31,7 @@ def manejar_led(address, *args):
         
     elif address == "/ch3":
         print(args[0])
-tlc5947.write()
+#tlc5947.write()
 # Resto del código sin cambios
 
 # Crea un despachador de mensajes OSC
