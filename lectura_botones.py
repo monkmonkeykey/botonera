@@ -8,8 +8,7 @@ import time
 client = SimpleUDPClient("192.168.15.7", 10000)  # Cambia la dirección y el puerto según tus necesidades
 # Configura los pines de los botones como entradas digitales
 
-def enviar_mensaje_osc(address, *args):
-    client.send_message(address, args)
+
     
 pines_de_botones = [
     digitalio.DigitalInOut(board.D17),
@@ -21,7 +20,10 @@ pines_de_botones = [
     digitalio.DigitalInOut(board.D16),
     digitalio.DigitalInOut(board.D19),
 ]
-
+def enviar_mensaje_osc(address, *args):
+    client.send_message(address, args)
+# Variables para el seguimiento del estado anterior de los botones
+estado_anterior = [1] * len(pines_de_botones)
 # Configura la dirección de los pines como entrada y, opcionalmente, la resistencia pull-down
 for pin in pines_de_botones:
     pin.direction = digitalio.Direction.INPUT
