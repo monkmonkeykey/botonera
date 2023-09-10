@@ -35,7 +35,7 @@ def enviar_mensaje_osc(address, *args):
 
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
 def manejar_led(address, *args):
-    print(f"Recibido mensaje desde {address}: {args}")
+    #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
         pin = LED_PIN_1
@@ -68,7 +68,7 @@ ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
 puerto_escucha = 8000   # Puerto en el que escucha el servidor
 
 servidor = osc_server.ThreadingOSCUDPServer((ip_escucha, puerto_escucha), dispatcher)
-print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
+#print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
 
 # Define una función para leer el estado de los botones y enviar mensajes OSC cuando haya cambios
 def leer_botones():
