@@ -28,7 +28,7 @@ def manejar_led(address, *args):
     if address == "/ch1":
             print(args[0])
     elif address == "/ch2":
-        pwm_value = int(mapear_valor(int(args[0]),0,10,0,65535))
+        pwm_value = int(mapear_valor(int(args[0]),0,100,0,65535))
         led.duty_cycle = pwm_value
         
     elif address == "/ch3":
