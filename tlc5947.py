@@ -43,7 +43,7 @@ blue = tlc5947.create_pwm_out(2)
 
 step = 10
 start_pwm = 0
-end_pwm = 32767  # 50% (32767, or half of the maximum 65535):
+end_pwm = 32766  # 50% (32767, or half of the maximum 65535):
 
 while True:
     for pin in (red, green, blue):
