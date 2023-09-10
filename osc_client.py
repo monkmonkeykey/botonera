@@ -4,8 +4,8 @@ import RPi.GPIO as GPIO
 
 # Configurar pines GPIO para los LEDs
 GPIO.setmode(GPIO.BCM)
-LED_PIN_1 = 22  # Cambia el número de pin según tu configuración
-LED_PIN_2 = 23  # Cambia el número de pin según tu configuración
+LED_PIN_1 = 23  # Cambia el número de pin según tu configuración
+LED_PIN_2 = 22  # Cambia el número de pin según tu configuración
 LED_PIN_3 = 26  # Cambia el número de pin según tu configuración
 GPIO.setup(LED_PIN_1, GPIO.OUT)
 GPIO.setup(LED_PIN_2, GPIO.OUT)
@@ -16,35 +16,33 @@ pwm = GPIO.PWM(LED_PIN_2, 100)  # Pin 22 con frecuencia de 100 Hz (puedes ajusta
 pwm.start(0)  # Iniciar PWM con ciclo de trabajo del 0%
 
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
-def manejar_mensaje_1(address, *args):
-    #print(f"Recibido mensaje desde {address}: {args}")
-    if args[0] == 1:
-        GPIO.output(LED_PIN_1, GPIO.HIGH)
-    else:
-        GPIO.output(LED_PIN_1, GPIO.LOW)
+def manejar_led(address, *args):
+    print(f"Recibido mensaje desde {address}: {args}")
+    pin = None
+    if address == "/ch1":
+        pin = LED_PIN_1
+    elif address == "/ch2":
+        # El valor flotante recibido controlará el ciclo de trabajo del PWM
+        duty_cycle = float(args[0])
+        pwm.ChangeDutyCycle(duty_cycle)
+    elif address == "/ch3":
+        pin = LED_PIN_3
 
-def manejar_mensaje_2(address, *args):
-    #print(f"Recibido mensaje desde {address}: {args}")
-    # El valor flotante recibido controlará el ciclo de trabajo del PWM
-    duty_cycle = float(args[0])
-    pwm.ChangeDutyCycle(duty_cycle)
-
-def manejar_mensaje_3(address, *args):
-    #print(f"Recibido mensaje desde {address}: {args}")
-    if args[0] == 1:
-        GPIO.output(LED_PIN_3, GPIO.HIGH)
-    else:
-        GPIO.output(LED_PIN_3, GPIO.LOW)
+    if pin is not None:
+        if args[0] == 1:
+            GPIO.output(pin, GPIO.HIGH)
+        else:
+            GPIO.output(pin, GPIO.LOW)
 
 # Resto del código sin cambios
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
 
-# Asocia las direcciones OSC con las funciones de manejo
-dispatcher.map("/ch1", manejar_mensaje_1)
-dispatcher.map("/ch2", manejar_mensaje_2)
-dispatcher.map("/ch3", manejar_mensaje_3)
+# Mapea las direcciones OSC a la función de manejo
+direcciones_osc = ["/ch1", "/ch2", "/ch3"]
+for direccion in direcciones_osc:
+    dispatcher.map(direccion, manejar_led)
 
 # Configura y corre el servidor OSC en hilos separados
 ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
