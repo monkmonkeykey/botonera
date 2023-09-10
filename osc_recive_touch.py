@@ -26,7 +26,7 @@ def manejar_led(address, *args):
     if address == "/ch1":
             print(args[0])
     elif address == "/ch2":
-        pwm_value = int(args[0])
+        pwm_value = mapear_valor(int(args[0]),0,100,0,65535)
         led.duty_cycle = pwm_value
         
     elif address == "/ch3":
@@ -56,3 +56,6 @@ servidor_thread.start()
 # Esperar que el servidor termine (esto podría ser en otro hilo o proceso si es necesario)
 servidor_thread.join()
 
+def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
+    valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
+    return valor_mapeado
