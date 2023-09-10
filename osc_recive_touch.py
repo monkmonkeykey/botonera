@@ -1,13 +1,16 @@
 import threading
 from pythonosc import dispatcher, osc_server
-
+import board
+import busio
+import digitalio
+import adafruit_tlc5947
 
 # Configurar pines GPIO para los LEDs
 
 
 # Define funciones para manejar los mensajes OSC y controlar los LEDs
 def manejar_led(address, *args):
-    print(f"Recibido mensaje desde {address}: {args}")
+    #print(f"Recibido mensaje desde {address}: {args}")
     pin = None
     if address == "/ch1":
         print(f"{address}: {args}")
