@@ -1,71 +1,37 @@
-# SPDX-FileCopyrightText: 2018 Tony DiCola for Adafruit Industries
-# SPDX-License-Identifier: MIT
-
-# Simple demo of controlling the TLC5947 12-bit 24-channel PWM controller.
-# Will update channel values to different PWM duty cycles.
-# Author: Tony DiCola
-
 import board
 import busio
-import digitalio
-
 import adafruit_tlc5947
 
-# Define pins connected to the TLC5947
-SCK = board.SCK
-MOSI = board.MOSI
-LATCH = digitalio.DigitalInOut(board.D5)
+# Inicializa el bus SPI
+spi = busio.SPI(board.SCK, MOSI=board.MOSI)
 
-# Initialize SPI bus.
-spi = busio.SPI(clock=SCK, MOSI=MOSI)
+# Inicializa el controlador TLC5947
+num_tlc5947 = 1  # Un solo TLC5947
+num_leds = num_tlc5947 * 24  # Cada TLC5947 tiene 24 salidas
+tlc5947 = adafruit_tlc5947.TLC5947(spi, num_leds)
 
-# Initialize TLC5947
-tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
+# Define una función para establecer el estado de un LED específico
+def set_led(led_index, value):
+    if led_index < num_leds:
+        tlc5947[led_index] = value
+        tlc5947.write()
 
-# You can optionally disable auto_write which allows you to control when
-# channel state is written to the chip.  Normally auto_write is true and
-# will automatically write out changes as soon as they happen to a channel, but
-# if you need more control or atomic updates of multiple channels then disable
-# and manually call write as shown below.
-# tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH, auto_write=False)
+# Define una función para controlar tres LEDs
+def controlar_tres_leds(intensidad_led1, intensidad_led2, intensidad_led3):
+    # Asigna intensidades a los LEDs
+    set_led(0, intensidad_led1)
+    set_led(1, intensidad_led2)
+    set_led(2, intensidad_led3)
 
-# There are two ways to channel channel PWM values.  The first is by getting
-# a PWMOut object that acts like the built-in PWMOut and can be used anywhere
-# it is used in your code.  Change the duty_cycle property to a 16-bit value
-# (note this is NOT the 12-bit value supported by the chip natively) and the
-# PWM channel will be updated.
+    # Actualiza el estado de los LEDs
+    tlc5947.write()
 
-# With 24 LEDs connected to channels 0 to 23, cycle the LEDs up and down:
+# Uso de la función para encender los LEDs
+controlar_tres_leds(32768, 49152, 16384)  # Intensidades en función de tus preferencias
 
-leds = [tlc5947.create_pwm_out(i) for i in range(24)]
+# Espera unos segundos
+import time
+time.sleep(2)
 
-step = 10
-start_pwm = 0
-end_pwm = 32767  # 50% (32767, or half of the maximum 65535):
-
-while True:
-    for led in leds:
-        # Brighten:
-        print("Brightening LED")
-        for pwm in range(start_pwm, end_pwm, step):
-            led.duty_cycle = pwm
-
-        # Dim:
-        print("Dimming LED")
-        for pwm in range(end_pwm, start_pwm, 0 - step):
-            led.duty_cycle = pwm
-
-# Note if auto_write was disabled you need to call write on the parent to
-# make sure the value is written (this is not common, if disabling auto_write
-# you probably want to use the direct 12-bit raw access instead shown below).
-#            tlc5947.write()
-
-# The other way to read and write channels is directly with each channel 12-bit
-# value and an item accessor syntax.  Index into the TLC5947 with the channel
-# number (0-23) and get or set its 12-bit value (0-4095).
-# For example set channel 1 to 50% duty cycle.
-# tlc5947[1] = 2048
-# Or set channel 23 (first channel from the end) to 2/3 duty cycle.
-# tlc5947[-1] = 2730
-# Again be sure to call write if you disabled auto_write.
-# tlc5947.write()
+# Apagar los LEDs
+controlar_tres_leds(0, 0, 0)
