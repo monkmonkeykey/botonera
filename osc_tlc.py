@@ -98,5 +98,3 @@ def leer_botones():
     except KeyboardInterrupt:
         pass  # Manejo de la excepción para una salida limpia
 
-finally:
-    GPIO.cleanup()  # Limpia los pines GPIO cuando se termina el programa
