@@ -18,11 +18,16 @@ dispatcher.map("ch1", manejar_mensaje_1)
 dispatcher.map("ch2", manejar_mensaje_2)
 dispatcher.map("ch3", manejar_mensaje_3)
 
-# Configura y corre el servidor OSC
+# Configura y corre el servidor OSC en hilos separados
 ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
 puerto_escucha = 8000   # Puerto en el que escucha el servidor
 
 servidor = osc_server.ThreadingOSCUDPServer((ip_escucha, puerto_escucha), dispatcher)
 print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
 
-servidor.serve_forever()
+# Iniciar el servidor en un hilo separado
+servidor_thread = threading.Thread(target=servidor.serve_forever)
+servidor_thread.start()
+
+# Esperar que el servidor termine (esto podría ser en otro hilo o proceso si es necesario)
+servidor_thread.join()
