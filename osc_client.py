@@ -1,12 +1,22 @@
 from pythonosc import dispatcher, osc_server
 
-# Define una función para manejar los mensajes OSC
-def manejar_mensaje(address, *args):
+# Define funciones para manejar los mensajes OSC
+def manejar_mensaje_1(address, *args):
+    print(f"Recibido mensaje desde {address}: {args}")
+
+def manejar_mensaje_2(address, *args):
+    print(f"Recibido mensaje desde {address}: {args}")
+
+def manejar_mensaje_3(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
-dispatcher.map("/ch1", manejar_mensaje)  # Asocia la dirección OSC con la función de manejo
+
+# Asocia las direcciones OSC con las funciones de manejo
+dispatcher.map("ch1", manejar_mensaje_1)
+dispatcher.map("ch2", manejar_mensaje_2)
+dispatcher.map("ch3", manejar_mensaje_3)
 
 # Configura y corre el servidor OSC
 ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
