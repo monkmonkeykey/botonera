@@ -31,10 +31,10 @@ def manejar_mensaje_1(address, *args):
     #led1.duty_cycle = int({args})
 def manejar_mensaje_2(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
-
+    print("No pasa nada oiga 2")
 def manejar_mensaje_3(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
-
+    print("No pasa nada oiga 3")
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
 
