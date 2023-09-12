@@ -26,6 +26,7 @@ def manejar_mensaje_1(address, *args):
     if address == "/ch1":
         print(args[0])
         led2.duty_cycle = int(args[0])
+        tlc5947.write()
 
     #led1.duty_cycle = int({args})
 def manejar_mensaje_2(address, *args):
