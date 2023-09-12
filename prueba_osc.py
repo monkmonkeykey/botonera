@@ -27,12 +27,13 @@ def manejar_mensaje_1(address, *args):
         print(args[0])
     elif address == "/ch2":
         print(args[0])
+        print ("Huevos")
     #led1.duty_cycle = int({args})
 def manejar_mensaje_2(address, *args):
-    print(f"Recibido mensaje desde {address}: {args}")
+    #print(f"Recibido mensaje desde {address}: {args}")
 
 def manejar_mensaje_3(address, *args):
-    print(f"Recibido mensaje desde {address}: {args}")
+    #print(f"Recibido mensaje desde {address}: {args}")
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
