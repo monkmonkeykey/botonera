@@ -23,7 +23,7 @@ led3 = tlc5947.create_pwm_out(2)
 # Define funciones para manejar los mensajes OSC
 def manejar_mensaje_1(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
-    led1.duty_cycle = {args}
+    led1.duty_cycle = int({args})
 def manejar_mensaje_2(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
 
