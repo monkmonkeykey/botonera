@@ -25,7 +25,7 @@ def manejar_mensaje_1(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     valor_osc = int({args})
     print(valor_osc)
-    led1.duty_cycle = int({args})
+    #led1.duty_cycle = int({args})
 def manejar_mensaje_2(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
 
