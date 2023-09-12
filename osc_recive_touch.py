@@ -33,7 +33,7 @@ def manejar_led(address, *args):
         time.sleep(0.01)
     elif address == "/ch3":
         print(args[0])
-tlc5947.write()
+#tlc5947.write()
 
 # Resto del código sin cambios
 
