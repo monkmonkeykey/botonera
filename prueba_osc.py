@@ -11,7 +11,7 @@ def manejar_mensaje_2(address, *args):
     print(f"Recibido mensaje desde {address}: {args}")
     
     
-    def manejar_mensaje_3(address, *args):
+def manejar_mensaje_3(address, *args):
         print(f"Recibido mensaje desde {address}: {args}")
 
 # Resto del código sin cambios
