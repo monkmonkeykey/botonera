@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import time
 
 # Configura el cliente OSC
-client = SimpleUDPClient("192.168.15.7", 10000)  # Cambia la dirección y el puerto según tus necesidades
+client = SimpleUDPClient("192.168.15.9", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
 # Configura los pines GPIO de los botones
 PINES_BOTONES = [17, 18, 24, 25, 5, 6, 16, 19]
