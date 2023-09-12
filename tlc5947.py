@@ -14,7 +14,7 @@ import adafruit_tlc5947
 # Define pins connected to the TLC5947
 SCK = board.SCK
 MOSI = board.MOSI
-LATCH = digitalio.DigitalInOut(board.D5)
+LATCH = digitalio.DigitalInOut(board.D27)
 
 # Initialize SPI bus.
 spi = busio.SPI(clock=SCK, MOSI=MOSI)
@@ -41,21 +41,14 @@ red = tlc5947.create_pwm_out(0)
 green = tlc5947.create_pwm_out(1)
 blue = tlc5947.create_pwm_out(2)
 
-step = 10
-start_pwm = 0
-end_pwm = 32766  # 50% (32767, or half of the maximum 65535):
+red_brightness = 32766  # 50% de brillo
+green_brightness = 16383  # 25% de brillo
+blue_brightness = 49151  # 75% de brillo
 
 while True:
-    for pin in (red, green, blue):
-        # Brighten:
-        print("Brightening LED")
-        for pwm in range(start_pwm, end_pwm, step):
-            pin.duty_cycle = pwm
-
-        # Dim:
-        print("Dimming LED")
-        for pwm in range(end_pwm, start_pwm, 0 - step):
-            pin.duty_cycle = pwm
+    red.duty_cycle = red_brightness
+    green.duty_cycle = green_brightness
+    blue.duty_cycle = blue_brightness
 
 # Note if auto_write was disabled you need to call write on the parent to
 # make sure the value is written (this is not common, if disabling auto_write
