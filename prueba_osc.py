@@ -24,7 +24,7 @@ led3 = tlc5947.create_pwm_out(2)
 def manejar_mensaje_1(address, *args):
     #print(f"Recibido mensaje desde {address}: {args}")
     if address == "/ch1":
-        print(args[0])
+        #print(args[0])
         led2.duty_cycle = int(args[0])
         tlc5947.write()
 
