@@ -8,17 +8,15 @@ def manejar_mensaje_1(address, *args):
     if args[0] == 1:
         print(address)
         #GPIO.output(LED_PIN_1, GPIO.HIGH)
-    else:
-        GPIO.output(LED_PIN_1, GPIO.LOW)
 
 def manejar_mensaje_2(address, *args):
-    if args[0] == 1:
+    if args[0] == 2:
         print(address)
 
 def manejar_mensaje_3(address, *args):
     
     #print(f"Recibido mensaje desde {address}: {args}")
-    if args[0] == 1:
+    if args[0] == 3:
         print(address)
 
 
