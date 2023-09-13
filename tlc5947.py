@@ -50,13 +50,13 @@ while True:
 
 
 # Incremento de 0 a 10
-    for i in range(0, 49151 ,75):
+    for i in range(0, 49151 ,100):
         intensity_level = i
         green.duty_cycle = intensity_level
         print("Nivel de intensidad:", intensity_level)
 
     # Decremento de 10 a 0
-    for i in range(49150, -1, -75):
+    for i in range(49150, -1, -100):
         intensity_level = i
         green.duty_cycle = intensity_level
         print("Nivel de intensidad:", intensity_level)
