@@ -1,30 +1,20 @@
-from scapy import ARP, Ether, srp
+from scapy.all import ARP, Ether, srp
 
-# Dirección IP y máscara de tu red local (en formato CIDR)
-# Por ejemplo, si tu red es 192.168.1.0/24, entonces la dirección IP sería "192.168.1.0/24"
-network = "192.168.15.255/24"
-direcciones_ip  = []
-# Crea un paquete ARP para hacer un escaneo de la red local
-arp = ARP(pdst=network)
-ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast Ethernet frame
+# Definir la IP de la red que quieres escanear en formato CIDR (por ejemplo, 192.168.1.0/24)
+ip_range = "192.168.15.0/24"
 
-packet = ether / arp
+# Crear un paquete ARP
+arp = ARP(pdst=ip_range)
 
-# Realiza el escaneo enviando el paquete ARP
+# Crear un paquete Ethernet
+ether = Ether(dst="ff:ff:ff:ff:ff:ff")
+
+# Combinar el paquete Ethernet y el paquete ARP
+packet = ether/arp
+
+# Enviar el paquete y recibir respuestas
 result = srp(packet, timeout=3, verbose=0)[0]
 
-# Lista para almacenar las direcciones IP y las direcciones MAC de los dispositivos encontrados
-devices = []
-
-# Recorre los resultados y agrega los dispositivos a la lista
+# Mostrar las direcciones IP y MAC encontradas
 for sent, received in result:
-    devices.append({'ip': received.psrc, 'mac': received.hwsrc})
-
-# Imprime la lista de dispositivos encontrados
-print("Dispositivos en la red local:")
-print("IP\t\t\tMAC Address")
-print("-----------------------------------------")
-for device in devices:
-    direcciones_ip.append({device['ip']})
-    #print(f"{device['ip']}\t\t{device['mac']}")
-print(type(direcciones_ip[0]))
+    print(f"IP: {received.psrc}   MAC: {received.hwsrc}")
