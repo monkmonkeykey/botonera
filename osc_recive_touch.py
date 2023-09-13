@@ -17,8 +17,9 @@ spi = busio.SPI(clock=SCK, MOSI=MOSI)
 # Inicializa el controlador TLC5947
 tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
 # Crea un objeto PWMOut para el LED (en este ejemplo, el LED está conectado al canal 0)
-led = tlc5947.create_pwm_out(1)
-
+led_uno = tlc5947.create_pwm_out(1)
+led_dos = tlc5947.create_pwm_out(2)
+led_tres = tlc5947.create_pwm_out(3)
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
     return valor_mapeado
@@ -26,13 +27,17 @@ def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maxim
 def manejar_led(address, *args):
     
     if address == "/ch1":
-            print(args[0])
+        pwm_value = int(mapear_valor(int(args[0]),0,100,0,65535))
+        led_uno.duty_cycle = pwm_value
+        time.sleep(0.01)
     elif address == "/ch2":
         pwm_value = int(mapear_valor(int(args[0]),0,100,0,65535))
-        led.duty_cycle = pwm_value
+        led_dos.duty_cycle = pwm_value
         time.sleep(0.01)
     elif address == "/ch3":
-        print(args[0])
+        pwm_value = int(mapear_valor(int(args[0]),0,100,0,65535))
+        led_tres.duty_cycle = pwm_value
+        time.sleep(0.01)
 #tlc5947.write()
 
 # Resto del código sin cambios
