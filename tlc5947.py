@@ -60,7 +60,10 @@ red_brightness = 32766  # 50% de brillo
 green_brightness = 16383  # 25% de brillo
 blue_brightness = 49151  # 75% de brillo
 intensity_level = 0
-while True:
+green.duty_cycle = intensity_level
+red.duty_cycle = intensity_level
+blue.duty_cycle = intensity_level
+while False:
     # Variable para controlar el nivel de intensidad
 
 
