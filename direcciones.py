@@ -1,4 +1,4 @@
-from scapy.all import ARP, Ether, srp
+from scapy import ARP, Ether, srp
 
 # Dirección IP y máscara de tu red local (en formato CIDR)
 # Por ejemplo, si tu red es 192.168.1.0/24, entonces la dirección IP sería "192.168.1.0/24"

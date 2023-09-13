@@ -36,6 +36,21 @@ tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
 
 # With an RGB LED hooked up to pins 0, 1, and 2, cycle the red, green, and
 # blue pins up and down:
+def custom_map(value, start1, stop1, start2, stop2):
+    # Mapea un valor de start1 a stop1 en un nuevo valor en el rango de start2 a stop2
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1))
+
+# Ejemplo de uso:
+valor_original = 50
+rango_original_inicio = 0
+rango_original_final = 100
+rango_destino_inicio = 0
+rango_destino_final = 255
+
+valor_mapeado = custom_map(valor_original, rango_original_inicio, rango_original_final, rango_destino_inicio, rango_destino_final)
+
+
+
 
 red = tlc5947.create_pwm_out(0)
 green = tlc5947.create_pwm_out(1)
