@@ -44,11 +44,22 @@ blue = tlc5947.create_pwm_out(2)
 red_brightness = 32766  # 50% de brillo
 green_brightness = 16383  # 25% de brillo
 blue_brightness = 49151  # 75% de brillo
-
+intensity_level = 0
 while True:
-    red.duty_cycle = red_brightness
-    green.duty_cycle = green_brightness
-    blue.duty_cycle = blue_brightness
+    # Variable para controlar el nivel de intensidad
+
+
+# Incremento de 0 a 10
+    for i in range(49151):
+        intensity_level = i
+        green.duty_cycle = intensity_level
+        print("Nivel de intensidad:", intensity_level)
+
+    # Decremento de 10 a 0
+    for i in range(49150, -1, -1):
+        intensity_level = i
+        green.duty_cycle = intensity_level
+        print("Nivel de intensidad:", intensity_level)
 
 # Note if auto_write was disabled you need to call write on the parent to
 # make sure the value is written (this is not common, if disabling auto_write
