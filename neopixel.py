@@ -1,35 +1,29 @@
+import board
+import neopixel
 import time
-from rpi_ws281x import Adafruit_NeoPixel, Color
 
 # Configuración de la tira de LED NeoPixel
-LED_COUNT = 16  # Número de LEDs en tu tira
-LED_PIN = 18    # El pin GPIO al que está conectada la tira de LED
-LED_FREQ_HZ = 800000
-LED_DMA = 10
-LED_BRIGHTNESS = 255
-LED_INVERT = False
+pixel_pin = board.D13  # El pin GPIO al que está conectada la tira de LED
+num_pixels = 8  # Número de LEDs en tu tira
 
-# Inicializa la biblioteca NeoPixel
-strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-
-# Inicializa la tira de LED (debes llamar a esto una vez antes de usar la tira)
-strip.begin()
+# Inicializa la tira de LED
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.2, auto_write=False)
 
 try:
     while True:
         # Cambia el color de todos los LEDs a rojo
-        for i in range(LED_COUNT):
-            strip.setPixelColor(i, Color(255, 0, 0))
-            strip.show()
+        for i in range(num_pixels):
+            pixels[i] = (255, 0, 0)  # Rojo
+            pixels.show()
             time.sleep(0.1)
 
         # Espera un segundo
         time.sleep(1)
 
         # Cambia el color de todos los LEDs a verde
-        for i in range(LED_COUNT):
-            strip.setPixelColor(i, Color(0, 255, 0))
-            strip.show()
+        for i in range(num_pixels):
+            pixels[i] = (0, 255, 0)  # Verde
+            pixels.show()
             time.sleep(0.1)
 
         # Espera un segundo
@@ -39,6 +33,7 @@ except KeyboardInterrupt:
     # Manejo de interrupción por teclado (Ctrl+C) para salir del bucle
     pass
 
-# Apaga la tira de LED cuando el programa termina
-strip.clear()
-strip.show()
+finally:
+    # Apaga la tira de LED cuando el programa termina
+    pixels.fill((0, 0, 0))
+    pixels.show()
