@@ -36,6 +36,21 @@ tlc5947 = adafruit_tlc5947.TLC5947(spi, LATCH)
 
 # With an RGB LED hooked up to pins 0, 1, and 2, cycle the red, green, and
 # blue pins up and down:
+def custom_map(value, start1, stop1, start2, stop2):
+    # Mapea un valor de start1 a stop1 en un nuevo valor en el rango de start2 a stop2
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1))
+
+# Ejemplo de uso:
+valor_original = 50
+rango_original_inicio = 0
+rango_original_final = 100
+rango_destino_inicio = 0
+rango_destino_final = 255
+
+valor_mapeado = custom_map(valor_original, rango_original_inicio, rango_original_final, rango_destino_inicio, rango_destino_final)
+
+
+
 
 red = tlc5947.create_pwm_out(0)
 green = tlc5947.create_pwm_out(1)
@@ -44,11 +59,25 @@ blue = tlc5947.create_pwm_out(2)
 red_brightness = 32766  # 50% de brillo
 green_brightness = 16383  # 25% de brillo
 blue_brightness = 49151  # 75% de brillo
+intensity_level = 0
+green.duty_cycle = intensity_level
+red.duty_cycle = intensity_level
+blue.duty_cycle = intensity_level
+while False:
+    # Variable para controlar el nivel de intensidad
 
-while True:
-    red.duty_cycle = red_brightness
-    green.duty_cycle = green_brightness
-    blue.duty_cycle = blue_brightness
+
+# Incremento de 0 a 10
+    for i in range(0, 65532 ,500):
+        intensity_level = i
+        green.duty_cycle = intensity_level
+        print("Nivel de intensidad:", intensity_level)
+
+    # Decremento de 10 a 0
+    for i in range(65531, -1, -500):
+        intensity_level = i
+        green.duty_cycle = intensity_level
+        print("Nivel de intensidad:", intensity_level)
 
 # Note if auto_write was disabled you need to call write on the parent to
 # make sure the value is written (this is not common, if disabling auto_write

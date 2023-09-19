@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from scapy.all import ARP, Ether, srp
 
 # Dirección IP y máscara de tu red local (en formato CIDR)
