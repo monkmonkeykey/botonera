@@ -2,8 +2,8 @@ import time
 from rpi_ws281x import Adafruit_NeoPixel, Color
 
 # Configuración de la tira de LED NeoPixel
-LED_COUNT = 8  # Número de LEDs en tu tira
-LED_PIN = 13    # El pin GPIO al que está conectada la tira de LED
+LED_COUNT = 16  # Número de LEDs en tu tira
+LED_PIN = 18    # El pin GPIO al que está conectada la tira de LED
 LED_FREQ_HZ = 800000
 LED_DMA = 10
 LED_BRIGHTNESS = 255
