@@ -38,7 +38,7 @@ try:
                 # Envía un mensaje OSC con el estado actual del botón
                 enviar_mensaje_osc(direccion_osc, int(estado_boton))
         enviar_mensaje_osc("/pot",int(mcp.read_adc(0)))
-        time.sleep(0.1)  # Pequeña pausa para evitar lecturas repetidas
+        time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
 
 except KeyboardInterrupt:
     pass
