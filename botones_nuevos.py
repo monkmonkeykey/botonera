@@ -7,7 +7,7 @@ import time
 client = SimpleUDPClient("192.168.15.9", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
 # Configura los pines GPIO de los botones
-BOTONES = [17, 18, 24, 25, 5, 6, 16, 19]
+BOTONES = [27,21,13,26]
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
