@@ -39,9 +39,9 @@ while True:
     values = [0]*8
     #for i in range(8):
         # The read_adc function will get the value of the specified channel (0-7).
-    valor  = int(mcp.read_adc(0))
-    print(type(valor))
-    pixels[0] = (255, 0, 0)
+    valor  = int(mcp.read_adc(0))   
+    
+    pixels[0] = (int(valorMapeado), 0, 0)
     pixels[1] = (0, 255, 0)
     
     # Actualiza los NeoPixels para reflejar los cambios
