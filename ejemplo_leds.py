@@ -23,7 +23,6 @@ def mapear(valor, inicioRango1, finRango1, inicioRango2, finRango2):
 
     return valorMapeado
 
-valor = 5
 inicioRango1 = 7
 finRango1 = 1023
 inicioRango2 = 0
