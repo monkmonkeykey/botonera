@@ -19,11 +19,12 @@ finRango1 = 1023
 inicioRango2 = 0
 finRango2 = 255
 
-valorMapeado = mapear(valor, inicioRango1, finRango1, inicioRango2, finRango2)
-print(valorMapeado)  # Esto imprimirá el valor mapeado
+
 
 
 while True:
+    valorMapeado = mapear(valor, inicioRango1, finRango1, inicioRango2, finRango2)
+    print(valorMapeado)  # Esto imprimirá el valor mapeado
     # Establece el primer píxel en rojo y el segundo en verde
     pixels[0] = (255, 0, 0)
     pixels[1] = (0, 255, 0)
