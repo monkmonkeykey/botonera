@@ -11,9 +11,10 @@ SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, 8)
+pixel_lock = threading.Lock()  # Semáforo para sincronizar acceso a los NeoPixels
 
 valor_minimo1 = 0
-valor_maximo1 = 1
+valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
@@ -24,8 +25,9 @@ def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maxim
 def manejar_led(address, *args):
     if address in ["/ch1", "/ch2", "/ch3"]:
         valor_mapeado = int(mapear_valor(args[0], valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2))
-        pixels[0] = (valor_mapeado, valor_mapeado, valor_mapeado)
-        pixels.show()
+        with pixel_lock:
+            pixels[0] = (valor_mapeado, valor_mapeado, valor_mapeado)
+            pixels.show()
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
@@ -45,3 +47,11 @@ print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
 # Inicia el servidor en un hilo separado
 servidor_thread = threading.Thread(target=servidor.serve_forever)
 servidor_thread.start()
+
+# Mantén el programa en ejecución
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("Deteniendo el servidor OSC...")
+    servidor.shutdown()
