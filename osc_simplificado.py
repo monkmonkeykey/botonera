@@ -12,6 +12,11 @@ mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, 8)
 
+valor_minimo1 = 0
+valor_maximo1 = 1
+valor_minimo2 = 0
+valor_maximo2 = 255
+
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     return (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
 
