@@ -43,7 +43,7 @@ def manejar_led(address, *args):
         #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_uno.duty_cycle = pwm_value_uno
     elif address == "/ch2":
-        print(args[0])
+        #print(args[0])
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[1] = (g, g, g)
@@ -51,7 +51,7 @@ def manejar_led(address, *args):
         #pwm_value_dos = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_dos.duty_cycle = pwm_value_dos
     elif address == "/ch3":
-        print(args[0])
+        #print(args[0])
         b = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[2] = (b, b, b)
