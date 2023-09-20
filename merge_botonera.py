@@ -59,7 +59,7 @@ def leer_botones():
                 estado_anterior[i] = estado_boton
                 enviar_mensaje_osc(direccion_osc, int(estado_boton))
         enviar_mensaje_osc("/pot", int(mcp.read_adc(0)))
-        time.sleep(0.01)
+        time.sleep(0.1)
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
