@@ -35,8 +35,8 @@ def controlar_leds():
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
     if address == "/ch1":
-        #print(args[0])
-        r = int(mapear_valor(int(args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2))
+        print(args[0])
+        r = mapear_valor(int(args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         print(r)
         #pixels[0] = (r, 0, 0)
         #pixels.show()
