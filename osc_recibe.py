@@ -19,8 +19,8 @@ def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maxim
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
     return valor_mapeado
 valor = 0
-valor_minimo1 = 7
-valor_maximo1= 1023
+valor_minimo1 = 0
+valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
