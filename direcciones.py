@@ -4,7 +4,7 @@ from scapy.all import ARP, Ether, srp
 
 # Dirección IP y máscara de tu red local (en formato CIDR)
 # Por ejemplo, si tu red es 192.168.1.0/24, entonces la dirección IP sería "192.168.1.0/24"
-network = "192.168.15.255/24"
+network = "10.0.0.255/24"
 direcciones_ip  = []
 # Crea un paquete ARP para hacer un escaneo de la red local
 arp = ARP(pdst=network)
