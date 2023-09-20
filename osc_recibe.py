@@ -1,7 +1,28 @@
 import threading
 from pythonosc import dispatcher, osc_server
 import time
+import board
+import neopixel
 
+# Import SPI library (for hardware SPI) and MCP3008 library.
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_MCP3008
+
+
+SPI_PORT   = 0
+SPI_DEVICE = 0
+mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+
+pixels = neopixel.NeoPixel(board.D18, 8)
+
+def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
+    valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
+    return valor_mapeado
+valor = 0
+valor_minimo1 = 7
+valor_maximo1= 1023
+valor_minimo2 = 0
+valor_maximo2 = 255
 
 
 # Función para controlar los LEDs
@@ -15,6 +36,9 @@ def controlar_leds():
 def manejar_led(address, *args):
     if address == "/ch1":
         print(args[0])
+        r = mapear_valor(args[0],valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
+        pixels[0] = (int(r), 0, 0)
+        pixels.show()
         #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_uno.duty_cycle = pwm_value_uno
     elif address == "/ch2":
@@ -27,9 +51,7 @@ def manejar_led(address, *args):
         #led_tres.duty_cycle = pwm_value_tres
 
 # Función para mapear valores
-def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
-    valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
-    return valor_mapeado
+
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
