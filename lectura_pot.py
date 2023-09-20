@@ -32,7 +32,7 @@ while True:
     values = [0]*8
     #for i in range(8):
         # The read_adc function will get the value of the specified channel (0-7).
-    #    values[i] = mcp.read_adc(i)
+    values[0] = mcp.read_adc(0)
     # Print the ADC values.
     print('| {0:>4}'.format(*values))
     # Pause for half a second.
