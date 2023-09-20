@@ -1,9 +1,5 @@
 import threading
 from pythonosc import dispatcher, osc_server
-import board
-import busio
-import digitalio
-import adafruit_tlc5947
 import time
 
 
