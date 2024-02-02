@@ -64,7 +64,8 @@ def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp)
             button.close()
         pixels.fill((0, 0, 0))  # Apaga todos los LEDs antes de salir
         pixels.show()
-
+    botones_thread.join()
+    leds_thread.join()
     
 # Función para controlar los LEDs
 def controlar_leds():
