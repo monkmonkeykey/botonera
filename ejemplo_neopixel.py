@@ -10,7 +10,7 @@ def configurar_brillo(pixels, brillo, color):
         brillo: Nivel de brillo deseado (0 a 255).
         color: Color deseado en formato (R, G, B).
     """
-    color_atenuado = tuple(int(c * (brillo / 255.0)) for c in color)
+    color_atenuado = tuple(int(c * (brillo / 110)) for c in color)
     pixels.fill(color_atenuado)
     pixels.show()
 
