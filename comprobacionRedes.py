@@ -1,11 +1,9 @@
-import subprocess
+import os
+import time
 
-def is_spi_initialized():
-    try:
-        lsmod_output = subprocess.check_output(['lsmod'], text=True)
-        return 'spi_bcm2835' in lsmod_output
-    except subprocess.CalledProcessError:
-        return False
+def is_spi_active():
+    spi_path = "/sys/class/spi_master/"
+    return any(os.path.isdir(os.path.join(spi_path, d)) for d in os.listdir(spi_path))
 
 def check_ssh():
     try:
@@ -14,9 +12,9 @@ def check_ssh():
     except subprocess.CalledProcessError:
         return False
 
-# Verificar si el servicio SPI está inicializado
-if is_spi_initialized():
-    print("El servicio SPI está inicializado en la Raspberry Pi.")
+# Verificar si el servicio SPI está activo
+if is_spi_active():
+    print("El servicio SPI está activo en la Raspberry Pi.")
 
     # Intentar comprobar hasta que el servicio SSH esté activo
     while not check_ssh():
@@ -25,4 +23,4 @@ if is_spi_initialized():
 
     print("El servicio SSH está activo. Continuando con el programa.")
 else:
-    print("El servicio SPI no está inicializado en la Raspberry Pi.")
+    print("El servicio SPI no está activo en la Raspberry Pi.")
