@@ -5,7 +5,6 @@ programa_a_ejecutar = "/home/pi/PowerRoom/botonera/botones2024.py"
 def check_ssh():
     try:
         subprocess.run(["systemctl", "is-active", "ssh"], check=True)
-        subprocess.run(["python", programa_a_ejecutar])
         return True
     except subprocess.CalledProcessError:
         return False
@@ -16,4 +15,4 @@ while not check_ssh():
     time.sleep(5)  # Espera 5 segundos antes de volver a verificar
 
 print("El servicio SSH está activo. Continuando con el programa.")
-
+subprocess.run(["python", programa_a_ejecutar])
