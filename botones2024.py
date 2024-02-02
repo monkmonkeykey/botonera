@@ -11,8 +11,9 @@ import Adafruit_MCP3008
 # Configuración del servidor OSC
 ip_escucha = "0.0.0.0"
 puerto_escucha = 8000
-dispatcher = dispatcher.Dispatcher()
 
+servidor = osc_server.ThreadingOSCUDPServer((ip_escucha, puerto_escucha), dispatcher)
+print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
 # Configuración del cliente OSC
 cliente_osc = SimpleUDPClient("192.168.15.8", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
