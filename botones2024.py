@@ -12,9 +12,6 @@ import Adafruit_MCP3008
 ip_escucha = "0.0.0.0"
 puerto_escucha = 8000
 dispatcher = dispatcher.Dispatcher()
-direcciones_osc = ["/ch1", "/ch2", "/ch3"]
-for direccion in direcciones_osc:
-    dispatcher.map(direccion, manejar_led)
 
 # Configuración del cliente OSC
 cliente_osc = SimpleUDPClient("192.168.15.8", 10000)  # Cambia la dirección y el puerto según tus necesidades
@@ -36,12 +33,32 @@ estado_anterior = [True] * len(BOTONES)
 def enviar_mensaje_osc(address, *args):
     cliente_osc.send_message(address, args)
 
+# Función para manejar los mensajes OSC
+def manejar_led(address, *args):
+    if address == "/ch1":
+        r = mapear_valor(args[0], valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2)
+        pixels[0] = (r, 0, 0)
+        pixels.show()
+    elif address == "/ch2":
+        g = mapear_valor(args[0], valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2)
+        pixels[1] = (0, g, 0)
+        pixels.show()
+    elif address == "/ch3":
+        b = mapear_valor(args[0], valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2)
+        pixels[2] = (0, 0, b)
+        pixels.show()
+
 # Función para controlar los LEDs
 def controlar_leds():
     while True:
         # Tu lógica para controlar los LEDs aquí
         # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
+
+# Función para mapear valores
+def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
+    valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
+    return valor_mapeado
 
 # Bucle para leer el estado de los botones y enviar mensajes OSC cuando haya cambios
 def leer_botones():
@@ -60,6 +77,11 @@ def leer_botones():
 
     except KeyboardInterrupt:
         pass
+
+# Mapeo de direcciones OSC a la función de manejo
+direcciones_osc = ["/ch1", "/ch2", "/ch3"]
+for direccion in direcciones_osc:
+    dispatcher.map(direccion, manejar_led)
 
 # Inicia los hilos
 servidor_thread = threading.Thread(target=servidor.serve_forever)
