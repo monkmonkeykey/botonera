@@ -15,7 +15,7 @@ def configurar_brillo(pixels, brillo, color):
     pixels.show()
 
 # Configura el número de NeoPixels y el pin de datos
-NUM_PIXELS = 8
+NUM_PIXELS = 16
 PIN = board.D18
 
 # Crea un objeto NeoPixel
