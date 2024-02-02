@@ -59,11 +59,11 @@ def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp)
             time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
 
     except KeyboardInterrupt:
-        pass
-
     # Limpia los recursos GPIO al salir
-    for button in buttons:
-        button.close()
+        for button in buttons:
+            button.close()
+        pixels.fill((0, 0, 0))  # Apaga todos los LEDs antes de salir
+        pixels.show()
 
     
 # Función para controlar los LEDs
@@ -130,6 +130,3 @@ botones_thread = threading.Thread(target=leer_botones_y_enviar_osc, args=(button
 botones_thread.start()
 
 
-botones_thread.join()
-leds_thread.join()
-    
