@@ -126,7 +126,7 @@ servidor_thread.start()
 leds_thread = threading.Thread(target=controlar_leds)
 leds_thread.start()
 
-botones_thread = threading.Thread(target=leer_botones_y_enviar_osc)
+botones_thread = threading.Thread(target=leer_botones_y_enviar_osc, args=(buttons, estado_anterior, enviar_mensaje_osc, mcp))
 botones_thread.start()
 
 
