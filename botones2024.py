@@ -130,5 +130,6 @@ botones_thread = threading.Thread(target=leer_botones_y_enviar_osc, args=(button
 botones_thread.start()
 
 
-
+botones_thread.join()
+leds_thread.join()
     
