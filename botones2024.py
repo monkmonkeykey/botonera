@@ -59,6 +59,8 @@ def escucha_botones():
 
     except KeyboardInterrupt:
         pass    
+for button in buttons:
+    button.close()
     
 # Función para controlar los LEDs
 def controlar_leds():
@@ -124,6 +126,5 @@ botones_thread = threading.Thread(target=escucha_botones)
 botones_thread.start()
 
 
-for button in buttons:
-    button.close()
+
     
