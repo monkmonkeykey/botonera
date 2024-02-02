@@ -10,7 +10,7 @@ def configurar_brillo(pixels, brillo, color):
         brillo: Nivel de brillo deseado (0 a 255).
         color: Color deseado en formato (R, G, B).
     """
-    color_atenuado = tuple(int(c * (brillo / 110)) for c in color)
+    color_atenuado = tuple(int(c * (brillo / 255)) for c in color)
     pixels.fill(color_atenuado)
     pixels.show()
 
@@ -22,7 +22,7 @@ PIN = board.D18
 pixels = neopixel.NeoPixel(PIN, NUM_PIXELS)
 
 # Define el nivel de brillo deseado y el color
-brillo = 128  # Puedes ajustar este valor según tu preferencia
+brillo = 50  # Puedes ajustar este valor según tu preferencia
 color = (255, 0, 0)  # Por ejemplo, rojo
 
 # Llama a la función para configurar el brillo de los NeoPixels
