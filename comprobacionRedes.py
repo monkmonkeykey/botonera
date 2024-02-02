@@ -15,4 +15,5 @@ while not check_ssh():
     time.sleep(5)  # Espera 5 segundos antes de volver a verificar
 
 print("El servicio SSH está activo. Continuando con el programa.")
+time.sleep(5)
 subprocess.run(["python", programa_a_ejecutar])
