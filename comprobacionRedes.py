@@ -4,7 +4,7 @@ programa_a_ejecutar = "/home/pi/PowerRoom/botonera2024.py"
 def check_ssh():
     try:
         subprocess.run(["systemctl", "is-active", "ssh"], check=True)
-        
+        subprocess.run(["python", programa_a_ejecutar])
         return True
     except subprocess.CalledProcessError:
         return False
