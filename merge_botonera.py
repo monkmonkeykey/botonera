@@ -20,7 +20,7 @@ BUTTON_PINS = [13,26,27,21]
 buttons = [Button(pin, pull_up=True) for pin in BUTTON_PINS]
 
 # Configura los píxeles NeoPixel
-pixels = neopixel.NeoPixel(board.D18, 8)
+pixels = neopixel.NeoPixel(board.D18, 16)
 
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
