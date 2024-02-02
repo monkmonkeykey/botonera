@@ -3,7 +3,8 @@ from pythonosc import dispatcher, osc_server
 import time
 import board
 import neopixel
-
+from pythonosc.udp_client import SimpleUDPClient
+from gpiozero import Button
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
@@ -14,6 +15,14 @@ SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, 8)
+
+# Configura el cliente OSC
+client = SimpleUDPClient("192.168.15.8", 10000)  # Cambia la dirección y el puerto según tus necesidades
+
+# Configura los pines GPIO de los botones
+BOTONES = [13,26,27,21]
+
+buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
