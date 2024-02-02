@@ -1,15 +1,10 @@
 import subprocess
-import time
 
-import subprocess
-import time
-programa_a_ejecutar = "/home/pi/PowerRoom/botonera/botones2024.py"
-def is_spi_enabled():
+def is_spi_initialized():
     try:
-        with open('/boot/config.txt', 'r') as config_file:
-            config_content = config_file.read()
-            return 'dtparam=spi=on' in config_content
-    except FileNotFoundError:
+        lsmod_output = subprocess.check_output(['lsmod'], text=True)
+        return 'spi_bcm2835' in lsmod_output
+    except subprocess.CalledProcessError:
         return False
 
 def check_ssh():
@@ -19,10 +14,10 @@ def check_ssh():
     except subprocess.CalledProcessError:
         return False
 
-# Verificar si SPI está habilitado
-if is_spi_enabled():
-    print("SPI está habilitado en la Raspberry Pi.")
-    subprocess.run(["python", programa_a_ejecutar])
+# Verificar si el servicio SPI está inicializado
+if is_spi_initialized():
+    print("El servicio SPI está inicializado en la Raspberry Pi.")
+
     # Intentar comprobar hasta que el servicio SSH esté activo
     while not check_ssh():
         print("Esperando que el servicio SSH se active...")
@@ -30,5 +25,4 @@ if is_spi_enabled():
 
     print("El servicio SSH está activo. Continuando con el programa.")
 else:
-    print("SPI no está habilitado en la Raspberry Pi.")
-
+    print("El servicio SPI no está inicializado en la Raspberry Pi.")
