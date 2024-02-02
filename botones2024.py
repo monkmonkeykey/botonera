@@ -42,7 +42,6 @@ valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
-import time
 
 def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp):
     try:
