@@ -22,7 +22,7 @@ PIN = board.D18
 pixels = neopixel.NeoPixel(PIN, NUM_PIXELS)
 
 # Define el nivel de brillo deseado y el color
-brillo = 50  # Puedes ajustar este valor según tu preferencia
+brillo = 1  # Puedes ajustar este valor según tu preferencia
 color = (255, 0, 0)  # Por ejemplo, rojo
 
 # Llama a la función para configurar el brillo de los NeoPixels
