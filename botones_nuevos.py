@@ -14,7 +14,7 @@ mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 client = SimpleUDPClient("192.168.15.8", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
 # Configura los pines GPIO de los botones
-BOTONES = [27,21,13,26]
+BOTONES = [13,26,27,21]
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
