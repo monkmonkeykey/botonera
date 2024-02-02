@@ -9,7 +9,7 @@ from gpiozero import Button
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 
-#time.sleep(30)
+time.sleep(30)
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
@@ -62,8 +62,8 @@ def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp)
     # Limpia los recursos GPIO al salir
         for button in buttons:
             button.close()
-            pixels.fill((0, 0, 0))  # Apaga todos los LEDs antes de salir
-            pixels.show()
+        pixels.fill((0, 0, 0))  # Apaga todos los LEDs antes de salir
+        pixels.show()
     botones_thread.join()
     leds_thread.join()
     
