@@ -39,7 +39,7 @@ for direccion in direcciones_osc:
 
 # Configura y corre el servidor OSC en un hilo separado
 ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
-puerto_escucha = 9000   # Puerto en el que escucha el servidor
+puerto_escucha = 8000   # Puerto en el que escucha el servidor
 
 servidor = osc_server.ThreadingOSCUDPServer((ip_escucha, puerto_escucha), dispatcher)
 print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
