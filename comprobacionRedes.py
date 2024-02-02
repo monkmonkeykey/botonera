@@ -1,6 +1,6 @@
 import subprocess
 import time
-programa_a_ejecutar = "/home/pi/PowerRoom/botonera2024.py"
+programa_a_ejecutar = "/home/pi/PowerRoom/botonera/botones2024.py"
 def check_ssh():
     try:
         subprocess.run(["systemctl", "is-active", "ssh"], check=True)
