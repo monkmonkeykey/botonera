@@ -24,6 +24,15 @@ BOTONES = [13,26,27,21]
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
+
+
+# Define una función para enviar un mensaje OSC
+def enviar_mensaje_osc(address, *args):
+    client.send_message(address, args)
+
+# Variables para el seguimiento del estado anterior de los botones
+estado_anterior = [True] * len(BOTONES)
+
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
     return valor_mapeado
@@ -33,7 +42,24 @@ valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
+def escucha_botones():
+    try:
+        while True:
+            for i, button in enumerate(buttons):
+                estado_boton = button.is_pressed
+                # Verifica si ha habido un cambio en el estado del botón
+                if estado_boton != estado_anterior[i]:
+                    direccion_osc = f"/boton{i + 1}"
+                    estado_anterior[i] = estado_boton
 
+                    # Envía un mensaje OSC con el estado actual del botón
+                    enviar_mensaje_osc(direccion_osc, int(estado_boton))
+            enviar_mensaje_osc("/pot",int(mcp.read_adc(0)))
+            time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
+
+    except KeyboardInterrupt:
+        pass    
+    
 # Función para controlar los LEDs
 def controlar_leds():
     while True:
@@ -93,3 +119,11 @@ servidor_thread.start()
 # Inicia el hilo para controlar los LEDs
 leds_thread = threading.Thread(target=controlar_leds)
 leds_thread.start()
+
+botones_thread = threading.Thread(target=escucha_botones)
+botones_thread.start()
+
+
+for button in buttons:
+    button.close()
+    
