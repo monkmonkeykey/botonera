@@ -42,7 +42,9 @@ valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
-def escucha_botones():
+import time
+
+def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp):
     try:
         while True:
             for i, button in enumerate(buttons):
@@ -54,13 +56,16 @@ def escucha_botones():
 
                     # Envía un mensaje OSC con el estado actual del botón
                     enviar_mensaje_osc(direccion_osc, int(estado_boton))
-            enviar_mensaje_osc("/pot",int(mcp.read_adc(0)))
+            enviar_mensaje_osc("/pot", int(mcp.read_adc(0)))
             time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
 
     except KeyboardInterrupt:
-        pass    
-for button in buttons:
-    button.close()
+        pass
+
+    # Limpia los recursos GPIO al salir
+    for button in buttons:
+        button.close()
+
     
 # Función para controlar los LEDs
 def controlar_leds():
@@ -122,7 +127,7 @@ servidor_thread.start()
 leds_thread = threading.Thread(target=controlar_leds)
 leds_thread.start()
 
-botones_thread = threading.Thread(target=escucha_botones)
+botones_thread = threading.Thread(target=leer_botones_y_enviar_osc)
 botones_thread.start()
 
 
