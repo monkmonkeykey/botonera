@@ -122,7 +122,7 @@ def manejar_led(address, *args):
 dispatcher = dispatcher.Dispatcher()
 
 # Mapea las direcciones OSC a la función de manejo
-direcciones_osc = ["/ch1", "/ch2", "/ch3"]
+direcciones_osc = ["/ch1", "/ch2", "/ch3", "/h", "/m"]
 for direccion in direcciones_osc:
     dispatcher.map(direccion, manejar_led)
 
