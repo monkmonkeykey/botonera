@@ -63,11 +63,11 @@ def manejar_led(address, *args):
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
     elif address == "/h":
-        hora = args[0]
+        hora = (args[0])
         tm.number(minuto)
         print("hora", hora)
     elif address == "/m":
-        minuto = args[0]
+        minuto = (args[0])
         tm.number(hora)
         print("minuto", minuto)
 
