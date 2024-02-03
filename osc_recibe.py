@@ -80,11 +80,11 @@ def manejar_led(address, *args):
         valor_maximo1= 60
         valor_minimo2 = 0
         valor_maximo2 = 60
-        hora = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
+        hora = mapear_valor(int((args[0])),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         tm.number(minuto)
         print("hora", hora)
     elif address == "/m":
-        minuto = (args[0])
+        minuto = (int(args[0]))
         tm.number(hora)
         print("minuto", minuto)
 
