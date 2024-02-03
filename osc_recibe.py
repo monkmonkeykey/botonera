@@ -41,10 +41,7 @@ def controlar_leds():
 def manejar_led(address, *args):
     if address == "/ch1":
         #print(args[0])
-        valor_minimo1 = 0
-        valor_maximo1= 1
-        valor_minimo2 = 0
-        valor_maximo2 = 255
+      
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[0] = (r, r, r)
@@ -53,10 +50,7 @@ def manejar_led(address, *args):
         #led_uno.duty_cycle = pwm_value_uno
     elif address == "/ch2":
         #print(args[0])
-        valor_minimo1 = 0
-        valor_maximo1= 1
-        valor_minimo2 = 0
-        valor_maximo2 = 255
+   
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[1] = (g, g, g)
@@ -65,10 +59,7 @@ def manejar_led(address, *args):
         #led_dos.duty_cycle = pwm_value_dos
     elif address == "/ch3":
         #print(args[0])
-        valor_minimo1 = 0
-        valor_maximo1= 1
-        valor_minimo2 = 0
-        valor_maximo2 = 255
+
         b = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[2] = (b, b, b)
@@ -76,16 +67,12 @@ def manejar_led(address, *args):
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
     elif address == "/h":
-        valor_minimo1 = 0
-        valor_maximo1= 60
-        valor_minimo2 = 0
-        valor_maximo2 = 60
-        hora = mapear_valor(int((args[0])),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
-        tm.number(hora)
+        hora = int(args[0])
+        tm.numbers(hora,minuto)
         print("hora", hora)
     elif address == "/m":
         minuto = (int(args[0]))
-        tm.number(minuto)
+        tm.numbers(hora,minuto)
         print("minuto", minuto)
 
 # Función para mapear valores
