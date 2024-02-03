@@ -27,8 +27,8 @@ valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
-hora = None
-minuto = None
+hora = 0
+minuto = 0
 # Función para controlar los LEDs
 def controlar_leds():
     while True:
@@ -78,7 +78,7 @@ def manejar_led(address, *args):
 dispatcher = dispatcher.Dispatcher()
 
 # Mapea las direcciones OSC a la función de manejo
-direcciones_osc = ["/ch1", "/ch2", "/ch3", "/h", "m"]
+direcciones_osc = ["/ch1", "/ch2", "/ch3", "/h", "/m"]
 for direccion in direcciones_osc:
     dispatcher.map(direccion, manejar_led)
 
