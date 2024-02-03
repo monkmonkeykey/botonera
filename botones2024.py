@@ -8,8 +8,12 @@ from gpiozero import Button
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
-
+import tm1637
 time.sleep(30)
+tm = tm1637.TM1637(clk=19, dio=20)
+tm.numbers(00,00)
+hora = 0
+minuto = 0
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
@@ -76,6 +80,8 @@ def controlar_leds():
 
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
+    global hora
+    global minuto
     if address == "/ch1":
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
@@ -100,7 +106,15 @@ def manejar_led(address, *args):
         pixels.show()
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
-
+    elif address == "/h":  
+        hora = int(args[0])
+        tm.numbers(hora,minuto)
+        print("hora", hora)
+    elif address == "/m":
+     
+        minuto = (int(args[0]))
+        tm.numbers(hora, minuto)
+        print("minuto", minuto)
 # Función para mapear valores
 
 
