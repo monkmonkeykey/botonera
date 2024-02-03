@@ -8,13 +8,15 @@ import neopixel
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import tm1637
-tm = tm1637.TM1637(clk=19, dio=20)
+
 
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, 8)
+
+tm = tm1637.TM1637(clk=19, dio=20)
 
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
