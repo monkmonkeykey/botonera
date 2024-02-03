@@ -1,20 +1,30 @@
 import tm1637
-from time import sleep
+tm = tm1637.TM1637(clk=20, dio=19)
 
-# Configura los pines GPIO utilizados para el display (ajústalos según tus conexiones)
-CLK = 20
-DIO = 19
+# all LEDS on "88:88"
+tm.write([127, 255, 127, 127])
 
-# Inicializa el objeto TM1637
-display = tm1637.TM1637(clk=CLK, dio=DIO, brightness=1.0)
+# all LEDS off
+tm.write([0, 0, 0, 0])
 
-try:
-    # Asigna números a cada dígito
-    display.show([1, 2, 3, 4])
+# show "0123"
+tm.write([63, 6, 91, 79])
 
-    # Espera unos segundos para que puedas ver la asignación
-    sleep(5)
-except KeyboardInterrupt:
-    pass
-finally:
-    display.cleanup()
+# show "COOL"
+tm.write([0b00111001, 0b00111111, 0b00111111, 0b00111000])
+
+# show "HELP"
+tm.show('help')
+
+# display "dEAd", "bEEF"
+tm.hex(0xdead)
+tm.hex(0xbeef)
+
+# show "12:59"
+tm.numbers(12, 59)
+
+# show "-123"
+tm.number(-123)
+
+# show temperature '24*C'
+tm.temperature(24)
