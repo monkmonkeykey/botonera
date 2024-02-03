@@ -18,6 +18,8 @@ pixels = neopixel.NeoPixel(board.D18, 8)
 
 tm = tm1637.TM1637(clk=19, dio=20)
 tm.numbers(00,00)
+hora = 0
+minuto = 0
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
     return valor_mapeado
@@ -27,8 +29,7 @@ valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
-hora = 0
-minuto = 0
+
 # Función para controlar los LEDs
 def controlar_leds():
     while True:
