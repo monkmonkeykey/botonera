@@ -1,14 +1,20 @@
-from gpiozero import TM1637SevenSegment
+import tm1637
 from time import sleep
 
-# Define los pines GPIO utilizados para el display (ajústalos según tus conexiones)
-tm = TM1637SevenSegment(dio=20, clk=19)
+# Configura los pines GPIO utilizados para el display (ajústalos según tus conexiones)
+CLK = 20
+DIO = 19
+
+# Inicializa el objeto TM1637
+display = tm1637.TM1637(clk=CLK, dio=DIO, brightness=1.0)
 
 try:
-    while True:
-        for num in range(10000):
-            # Muestra el número en el display
-            tm.display(num)
-            sleep(0.5)
+    # Asigna números a cada dígito
+    display.show([1, 2, 3, 4])
+
+    # Espera unos segundos para que puedas ver la asignación
+    sleep(5)
 except KeyboardInterrupt:
-    tm.clear()
+    pass
+finally:
+    display.cleanup()
