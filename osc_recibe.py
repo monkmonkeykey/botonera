@@ -7,7 +7,8 @@ import neopixel
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
-
+import tm1637
+tm = tm1637.TM1637(clk=19, dio=20)
 
 SPI_PORT   = 0
 SPI_DEVICE = 0
@@ -24,7 +25,8 @@ valor_maximo1= 1
 valor_minimo2 = 0
 valor_maximo2 = 255
 
-
+hora = None
+minuto = None
 # Función para controlar los LEDs
 def controlar_leds():
     while True:
@@ -58,6 +60,12 @@ def manejar_led(address, *args):
         pixels.show()
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
+    elif address == "/hh":
+        hora = args[0]
+        tm.numbers(hora, minuto)
+    elif address == "/mm":
+        minuto = args[0]
+        tm.numbers(hora, minuto)
 
 # Función para mapear valores
 
