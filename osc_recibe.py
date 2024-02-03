@@ -65,9 +65,11 @@ def manejar_led(address, *args):
     elif address == "/hh":
         hora = args[0]
         tm.number(minuto)
+        print("hora", hora)
     elif address == "/mm":
         minuto = args[0]
         tm.number(hora)
+        print("minuto", minuto)
 
 # Función para mapear valores
 
