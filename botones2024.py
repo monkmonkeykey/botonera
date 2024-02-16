@@ -127,7 +127,7 @@ for direccion in direcciones_osc:
     dispatcher.map(direccion, manejar_led)
 
 # Configura y corre el servidor OSC en un hilo separado
-ip_escucha = "192.165.15.6"  # Escucha en todas las interfaces de red
+ip_escucha = "0.0.0.0"  # Escucha en todas las interfaces de red
 puerto_escucha = 8000   # Puerto en el que escucha el servidor
 
 servidor = osc_server.ThreadingOSCUDPServer((ip_escucha, puerto_escucha), dispatcher)
