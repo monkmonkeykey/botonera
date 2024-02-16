@@ -87,8 +87,8 @@ def controlar_leds():
 
 def set_pixel_color(pixel, color,brillo):
     pixels[pixel] = color
-    pixels[pixel].brightness = int(brillo) / 255.0
-    pixels[pixel].show()
+    pixels.brightness = int(brillo) / 255.0
+    pixels.show()
     #time.sleep(0.01)
 
 # Función para manejar los mensajes OSC
