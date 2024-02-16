@@ -18,6 +18,7 @@ SPI_PORT   = 0
 SPI_DEVICE = 0
 num_pixels = 8
 brillo = 1.0
+colorUno = (255, 0, 0)
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness=brillo, auto_write=False)
@@ -30,6 +31,9 @@ BOTONES = [13,26,27,21]
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
+def set_pixel_color(pixel, color):
+    pixels[pixel] = color
+    pixels.show()
 
 
 # Define una función para enviar un mensaje OSC
@@ -89,10 +93,12 @@ def manejar_led(address, *args):
     if address == "/ch1":
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
+        set_pixel_color(r, colorUno)
         #print(r)
-        pixels[0] = (r, 0, 0)
+        #pixels[0] = (r, 0, 0)
         #pixels.brightness(float(r))
-        pixels.show()
+        
+        #pixels.show()
         #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_uno.duty_cycle = pwm_value_uno
     elif address == "/ch2":
