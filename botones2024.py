@@ -31,9 +31,7 @@ BOTONES = [13,26,27,21]
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
-def set_pixel_color(pixel, color):
-    pixels[pixel] = color
-    pixels.show()
+
 
 
 # Define una función para enviar un mensaje OSC
@@ -86,6 +84,10 @@ def controlar_leds():
         # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
+def set_pixel_color(pixel, color):
+    pixels[pixel] = color
+    pixels.show()
+
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
     global hora
@@ -94,6 +96,8 @@ def manejar_led(address, *args):
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         set_pixel_color(r, colorUno)
+        pixels.brightness = r
+        pixels.show()
         #print(r)
         #pixels[0] = (r, 0, 0)
         #pixels.brightness(float(r))
