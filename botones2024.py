@@ -16,9 +16,11 @@ hora = 0
 minuto = 0
 SPI_PORT   = 0
 SPI_DEVICE = 0
+num_pixels = 8
+brillo = 1.0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
-pixels = neopixel.NeoPixel(board.D18, 8)
+pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness= brillo)
 
 # Configura el cliente OSC
 client = SimpleUDPClient("192.168.15.6", 10000)  # Cambia la dirección y el puerto según tus necesidades
@@ -89,7 +91,7 @@ def manejar_led(address, *args):
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[0] = (r, 0, 0)
-        pixels.setBrightness(r)
+        pixels.brightness(r)
         pixels.show()
         #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_uno.duty_cycle = pwm_value_uno
