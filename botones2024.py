@@ -110,16 +110,14 @@ def manejar_led(address, *args):
         #print(args[0])
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        pixels[1] = (g, g, g)
-        pixels.show()
+        set_pixel_color(1, colorUno,g)
         #pwm_value_dos = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_dos.duty_cycle = pwm_value_dos
     elif address == "/ch3":
         #print(args[0])
         b = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        pixels[2] = (b, b, b)
-        pixels.show()
+        set_pixel_color(2, colorUno,b)
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
     elif address == "/h":  
