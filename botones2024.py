@@ -18,7 +18,7 @@ SPI_PORT   = 0
 SPI_DEVICE = 0
 num_pixels = 8
 brillo = 1.0
-
+colorUno = (255, 0, 0)
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness=brillo, auto_write=False)
@@ -96,7 +96,7 @@ def manejar_led(address, *args):
     if address == "/ch1":
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
-        colorUno = (255, 0, 0)
+        
         set_pixel_color(0, colorUno,r)
         #pixels.show()
         #print(r)
