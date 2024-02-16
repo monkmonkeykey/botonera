@@ -108,7 +108,6 @@ def manejar_led(address, *args):
         b = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
         pixels[2] = (b, b, b)
-        pixels.bri
         pixels.show()
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
