@@ -98,7 +98,7 @@ def manejar_led(address, *args):
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         colorUno = (255, 0, 0)
         set_pixel_color(0, colorUno,r)
-        pixels.show()
+        #pixels.show()
         #print(r)
         #pixels[0] = (r, 0, 0)
         #pixels.brightness(float(r))
