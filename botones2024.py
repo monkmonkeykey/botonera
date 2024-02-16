@@ -86,6 +86,7 @@ def controlar_leds():
 
 def set_pixel_color(pixel, color,brillo):
     pixels[pixel] = color
+    brillo = brillo / 255
     pixels.brightness = brillo
     pixels.show()
 
