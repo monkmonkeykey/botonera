@@ -2,25 +2,36 @@ import time
 import board
 import neopixel
 
-# Definir el número de Neopixels en el módulo
-num_pixels = 8
+numPixels = 8
 
-# Definir el pin al que está conectado el módulo
-pin = board.D18
+# Definir el objeto NeoPixel
+pixels = neopixel.NeoPixel(board.D18, numPixels, brightness=1.0, auto_write=False)
 
-# Crear el objeto NeoPixel para el módulo completo
-pixels = neopixel.NeoPixel(pin, num_pixels, brightness=1.0, auto_write=False)
+def set_pixel_color(pixel, color):
+    # Guardar el brillo actual
+    current_brightness = pixels.brightness
 
-# Bucle principal
+    # Establecer el color del píxel sin cambiar el brillo global
+    pixels.brightness = 1.0  # Establecer temporalmente el brillo a 1.0 para asegurar un color completo
+    pixels[pixel] = color
+    pixels.show()
+
+    # Restaurar el brillo original
+    pixels.brightness = current_brightness
+
 while True:
-    # Definir colores para cada LED de forma independiente
-    for i in range(num_pixels):
-        color = ((i * 30) % 256, (i * 50) % 256, (i * 70) % 256)
-        pixels[i] = color
-    
-    # Variar el brillo de la cadena completa
+    # Definir un color (por ejemplo, rojo)
+    color = (255, 0, 0)
+
+    # Establecer el color del píxel 0
+    set_pixel_color(0, color)
+
+    # Establecer el color del píxel 1 sin afectar el brillo global
+    set_pixel_color(1, (0, 255, 0))  # Por ejemplo, verde
+
+    # Variar el brillo del color
     for b in range(256):
-        pixels.brightness = int(b) / 255.0
+        pixels.brightness = b / 255.0
         pixels.show()
         time.sleep(0.01)
 
