@@ -85,7 +85,13 @@ def controlar_leds():
         # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
-def set_pixel_color(pixel, color,brillo):
+def set_pixel_color_uno(pixel, color,brillo):
+    pixels[pixel] = color
+    pixels.brightness = int(brillo) / 255.0
+    pixels.show()
+    #time.sleep(0.01)
+
+def set_pixel_color_dos(pixel, color,brillo):
     pixels[pixel] = color
     pixels.brightness = int(brillo) / 255.0
     pixels.show()
@@ -99,7 +105,7 @@ def manejar_led(address, *args):
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         
-        set_pixel_color(0, colorUno,r)
+        set_pixel_color_uno(0, colorUno,r)
         pixels.show()
         #print(r)
         #pixels[0] = (r, 0, 0)
@@ -112,7 +118,7 @@ def manejar_led(address, *args):
         #print(args[0])
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        set_pixel_color(1, colorDos,g)
+        set_pixel_color_dos(1, colorDos,g)
         pixels.show()
         #pwm_value_dos = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_dos.duty_cycle = pwm_value_dos
