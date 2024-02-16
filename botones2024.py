@@ -57,6 +57,7 @@ def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp)
                     direccion_osc = f"/boton{i + 1}"
                     estado_anterior[i] = estado_boton
                     print(estado_boton)
+                    print(int(mcp.read_adc(0)))
                     # Envía un mensaje OSC con el estado actual del botón
                     enviar_mensaje_osc(direccion_osc, int(estado_boton))
             enviar_mensaje_osc("/pot", int(mcp.read_adc(0)))
