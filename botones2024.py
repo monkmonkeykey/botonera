@@ -84,8 +84,9 @@ def controlar_leds():
         # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
-def set_pixel_color(pixel, color):
+def set_pixel_color(pixel, color,brillo):
     pixels[pixel] = color
+    pixels.brightness = brillo
     pixels.show()
 
 # Función para manejar los mensajes OSC
@@ -96,8 +97,7 @@ def manejar_led(address, *args):
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         colorUno = (255, 0, 0)
-        set_pixel_color(0, colorUno)
-        pixels.brightness = r
+        set_pixel_color(0, colorUno,brillo)
         pixels.show()
         #print(r)
         #pixels[0] = (r, 0, 0)
