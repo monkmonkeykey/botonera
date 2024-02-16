@@ -62,7 +62,7 @@ def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp)
             enviar_mensaje_osc("/pot", int(mcp.read_adc(0)))
             time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
             
-            print(int(mcp.read_adc(0)))
+            #print(int(mcp.read_adc(0)))
 
     except KeyboardInterrupt:
     # Limpia los recursos GPIO al salir
