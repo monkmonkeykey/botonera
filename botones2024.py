@@ -9,7 +9,7 @@ from gpiozero import Button
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import tm1637
-time.sleep(30)
+#time.sleep(30)
 tm = tm1637.TM1637(clk=19, dio=20)
 tm.numbers(00,00)
 hora = 0
