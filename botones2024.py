@@ -19,6 +19,7 @@ SPI_DEVICE = 0
 num_pixels = 8
 brillo = 1.0
 colorUno = (255, 0, 0)
+colorDos = (170, 0, 255)
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness=brillo, auto_write=False)
@@ -110,7 +111,7 @@ def manejar_led(address, *args):
         #print(args[0])
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        set_pixel_color(1, colorUno,g)
+        set_pixel_color(1, colorDos,g)
         #pwm_value_dos = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_dos.duty_cycle = pwm_value_dos
     elif address == "/ch3":
