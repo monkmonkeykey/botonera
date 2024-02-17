@@ -18,8 +18,7 @@ SPI_PORT   = 0
 SPI_DEVICE = 0
 num_pixels = 8
 brillo = 1.0
-colorUno = (255, 0, 0)
-colorDos = (170, 0, 255)
+
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness=brillo, auto_write=False)
@@ -85,17 +84,10 @@ def controlar_leds():
         # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
-def set_pixel_color_uno(pixel, color,brillo):
+def set_pixel_color(pixel, color,brillo):
     pixels[pixel] = color
-    pixels.brightness = int(brillo) / 255.0
+    pixels.brightness = brillo / 255.
     pixels.show()
-    #time.sleep(0.01)
-
-def set_pixel_color_dos(pixel, color,brillo):
-    pixels[pixel] = color
-    pixels.brightness = int(brillo) / 255.0
-    pixels.show()
-    #time.sleep(0.01)
 
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
@@ -104,21 +96,21 @@ def manejar_led(address, *args):
     if address == "/ch1":
         #print(args[0])
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
-        
-        set_pixel_color_uno(0, colorUno,r)
-        pixels.show()
+        colorUno = (255, 0, 0)
+       # set_pixel_color(0, colorUno,r)
+       # pixels.show()
         #print(r)
-        #pixels[0] = (r, 0, 0)
+        pixels[0] = (r, 0, 0)
         #pixels.brightness(float(r))
         
-        #pixels.show()
+        pixels.show()
         #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_uno.duty_cycle = pwm_value_uno
     elif address == "/ch2":
         #print(args[0])
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        set_pixel_color_dos(1, colorDos,g)
+        pixels[1] = (g, g, g)
         pixels.show()
         #pwm_value_dos = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_dos.duty_cycle = pwm_value_dos
@@ -126,7 +118,8 @@ def manejar_led(address, *args):
         #print(args[0])
         b = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        set_pixel_color(2, colorUno,b)
+        pixels[2] = (b, b, b)
+        pixels.show()
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
     elif address == "/h":  
