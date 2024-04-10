@@ -1,8 +1,8 @@
 import threading
 from pythonosc import dispatcher, osc_server
 import time
-import board
-import neopixel
+#import board
+#import neopixel
 
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
@@ -14,7 +14,7 @@ SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
-pixels = neopixel.NeoPixel(board.D18, 8)
+#pixels = neopixel.NeoPixel(board.D18, 8)
 
 
 
@@ -46,8 +46,8 @@ def manejar_led(address, *args):
       
         r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        pixels[0] = (r, r, r)
-        pixels.show()
+        #pixels[0] = (r, r, r)
+       # pixels.show()
         #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_uno.duty_cycle = pwm_value_uno
     elif address == "/ch2":
@@ -55,8 +55,7 @@ def manejar_led(address, *args):
    
         g = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        pixels[1] = (g, g, g)
-        pixels.show()
+        ##pixels.show()
         #pwm_value_dos = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_dos.duty_cycle = pwm_value_dos
     elif address == "/ch3":
@@ -64,8 +63,8 @@ def manejar_led(address, *args):
 
         b = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
         #print(r)
-        pixels[2] = (b, b, b)
-        pixels.show()
+        #pixels[2] = (b, b, b)
+        #pixels.show()
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
     elif address == "/h":
