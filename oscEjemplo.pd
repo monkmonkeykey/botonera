@@ -1,4 +1,4 @@
-#N canvas 517 198 1298 1097 12;
+#N canvas 541 146 1298 1097 12;
 #X floatatom 521 124 5 0 0 0 - - - 0;
 #X msg 803 158 disconnect;
 #X obj 109 36 netreceive -u 8000;
@@ -17,13 +17,12 @@
 #X obj 275 274 expr if ($f2 == 1 \, $f1 \, 5) \; if ($f2 == 0 \, $f1 \, 4) \;;
 #X obj 211 524 route;
 #X obj 583 320 loadbang;
-#X obj 827 199 netsend -u;
-#X obj 730 243 oscformat;
-#X msg 564 166 send /valor1 \$1;
 #X obj 549 592 color;
-#X msg 723 78 connect 127.0.0.1 8000;
+#X obj 827 199 netsend 1;
+#X msg 564 166 send /h \$1;
+#X msg 723 78 connect localhost 8000;
 #X connect 0 0 20 0;
-#X connect 1 0 18 0;
+#X connect 1 0 19 0;
 #X connect 2 0 3 0;
 #X connect 4 0 5 0;
 #X connect 5 0 7 0;
@@ -33,6 +32,5 @@
 #X connect 11 0 12 0;
 #X connect 12 0 13 0;
 #X connect 15 0 14 0;
-#X connect 19 0 18 0;
 #X connect 20 0 19 0;
-#X connect 22 0 18 0;
+#X connect 21 0 19 0;
