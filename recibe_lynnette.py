@@ -19,7 +19,7 @@ SPI_DEVICE = 0
 num_pixels = 8
 brillo = 1.0
 
-mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+#mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels, brightness=brillo, auto_write=False)
 
