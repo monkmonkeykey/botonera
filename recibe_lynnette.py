@@ -67,7 +67,12 @@ def manejar_led(address, *args):
         #pwm_value_tres = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
         #led_tres.duty_cycle = pwm_value_tres
     elif address == "/h":
-      
+        r = mapear_valor((args[0]),valor_minimo1, valor_maximo1,valor_minimo2,valor_maximo2)
+        print(r)
+        pixels[0] = (r, r, r)
+        pixels.show()
+        pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
+        led_uno.duty_cycle = pwm_value_uno
         hora = int(args[0])
 
         print("hora", hora)
