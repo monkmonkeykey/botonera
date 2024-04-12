@@ -29,7 +29,7 @@ client = SimpleUDPClient("192.168.15.6", 10000)  # Cambia la dirección y el pue
 # Configura los pines GPIO de los botones
 BOTONES = [13,26,27,21]
 
-buttons = [Button(pin, pull_up=True) for pin in BOTONES]
+#buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
 
 
@@ -39,7 +39,7 @@ def enviar_mensaje_osc(address, *args):
     client.send_message(address, args)
 
 # Variables para el seguimiento del estado anterior de los botones
-estado_anterior = [True] * len(BOTONES)
+#estado_anterior = [True] * len(BOTONES)
 
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
@@ -70,13 +70,14 @@ def leer_botones_y_enviar_osc(buttons, estado_anterior, enviar_mensaje_osc, mcp)
 
     except KeyboardInterrupt:
     # Limpia los recursos GPIO al salir
+    """
         for button in buttons:
             button.close()
         pixels.fill((0, 0, 0))  # Apaga todos los LEDs antes de salir
         pixels.show()
     botones_thread.join()
     leds_thread.join()
-    
+    """
 # Función para controlar los LEDs
 def controlar_leds():
     while True:
@@ -157,5 +158,5 @@ servidor_thread.start()
 leds_thread = threading.Thread(target=controlar_leds)
 leds_thread.start()
 
-botones_thread = threading.Thread(target=leer_botones_y_enviar_osc, args=(buttons, estado_anterior, enviar_mensaje_osc, mcp))
-botones_thread.start()
+#botones_thread = threading.Thread(target=leer_botones_y_enviar_osc, args=(buttons, estado_anterior, enviar_mensaje_osc, mcp))
+#botones_thread.start()
