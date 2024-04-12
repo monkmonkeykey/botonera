@@ -25,7 +25,7 @@ def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maxim
     return valor_mapeado
 valor = 0
 valor_minimo1 = 0
-valor_maximo1= 1
+valor_maximo1= 255
 valor_minimo2 = 0
 valor_maximo2 = 255
 
