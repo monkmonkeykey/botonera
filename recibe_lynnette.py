@@ -1,11 +1,11 @@
 import threading
 from pythonosc import dispatcher, osc_server
 import time
-#import board
-#import neopixel
+import board
+import neopixel
 
 # Import SPI library (for hardware SPI) and MCP3008 library.
-import Adafruit_GPIO.SPI as SPI
+#import Adafruit_GPIO.SPI as SPI
 #import Adafruit_MCP3008
 
 
