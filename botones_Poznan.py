@@ -37,7 +37,13 @@ try:
 
                 # Envía un mensaje OSC con el estado actual del botón
                 enviar_mensaje_osc(direccion_osc, int(estado_boton))
-        enviar_mensaje_osc("/pot", int(mcp.read_adc(0)))
+        
+        # Leer y enviar los valores de los potenciómetros
+        valor_pot1 = int(mcp.read_adc(0))
+        valor_pot2 = int(mcp.read_adc(1))
+        enviar_mensaje_osc("/pot1", valor_pot1)
+        enviar_mensaje_osc("/pot2", valor_pot2)
+        
         time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
 
 except KeyboardInterrupt:
