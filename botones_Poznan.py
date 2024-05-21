@@ -14,7 +14,7 @@ mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 client = SimpleUDPClient("192.168.1.38", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
 # Configura los pines GPIO de los botones
-BOTONES = [13,26,27,21,4,19]
+BOTONES = [13, 26, 27, 21, 20, 16]  # Añade los nuevos pines aquí
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
 
@@ -37,7 +37,7 @@ try:
 
                 # Envía un mensaje OSC con el estado actual del botón
                 enviar_mensaje_osc(direccion_osc, int(estado_boton))
-        enviar_mensaje_osc("/pot",int(mcp.read_adc(0)))
+        enviar_mensaje_osc("/pot", int(mcp.read_adc(0)))
         time.sleep(0.01)  # Pequeña pausa para evitar lecturas repetidas
 
 except KeyboardInterrupt:
@@ -46,4 +46,3 @@ except KeyboardInterrupt:
 # Limpia los recursos GPIO al salir
 for button in buttons:
     button.close()
-    
