@@ -1,54 +1,51 @@
 import threading
 from pythonosc import dispatcher, osc_server
 import time
+import RPi.GPIO as GPIO
 
+# Configuración de los pines GPIO para los LEDs
+LED_PIN_1 = 18  # Pin GPIO para LED 1
+LED_PIN_2 = 23  # Pin GPIO para LED 2
+LED_PIN_3 = 24  # Pin GPIO para LED 3
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LED_PIN_1, GPIO.OUT)
+GPIO.setup(LED_PIN_2, GPIO.OUT)
+GPIO.setup(LED_PIN_3, GPIO.OUT)
 
+# Configuración de PWM para los LEDs
+led1_pwm = GPIO.PWM(LED_PIN_1, 1000)  # 1000 Hz frecuencia de PWM
+led2_pwm = GPIO.PWM(LED_PIN_2, 1000)
+led3_pwm = GPIO.PWM(LED_PIN_3, 1000)
 
+led1_pwm.start(0)  # Inicia PWM con 0% de duty cycle
+led2_pwm.start(0)
+led3_pwm.start(0)
 
-hora = 0
-minuto = 0
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
     return valor_mapeado
-valor = 0
-valor_minimo1 = 0
-valor_maximo1= 1
-valor_minimo2 = 0
-valor_maximo2 = 255
 
-
-# Función para controlar los LEDs
+# Función para controlar los LEDs (se puede ajustar según sea necesario)
 def controlar_leds():
     while True:
-        # Tu lógica para controlar los LEDs aquí
-        # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
-    global hora
-    global minuto
     if address == "/ch1":
-        print(args[0])
-
-
-        #pwm_value_uno = int(mapear_valor(int(args[0]), 0, 100, 0, 65535))
-        #led_uno.duty_cycle = pwm_value_uno
+        valor_pwm = mapear_valor(float(args[0]), 0, 1, 0, 100)
+        led1_pwm.ChangeDutyCycle(valor_pwm)
     elif address == "/ch2":
-        print(args[0])
-
+        valor_pwm = mapear_valor(float(args[0]), 0, 1, 0, 100)
+        led2_pwm.ChangeDutyCycle(valor_pwm)
     elif address == "/ch3":
-        print(args[0])
-
+        valor_pwm = mapear_valor(float(args[0]), 0, 1, 0, 100)
+        led3_pwm.ChangeDutyCycle(valor_pwm)
     elif address == "/h":
         print(args[0])
-
     elif address == "/m":
         print(args[0])
-
-# Función para mapear valores
-
 
 # Crea un despachador de mensajes OSC
 dispatcher = dispatcher.Dispatcher()
@@ -69,6 +66,6 @@ print(f"Escuchando en {ip_escucha}:{puerto_escucha}")
 servidor_thread = threading.Thread(target=servidor.serve_forever)
 servidor_thread.start()
 
-# Inicia el hilo para controlar los LEDs
+# Inicia el hilo para controlar los LEDs (si es necesario)
 leds_thread = threading.Thread(target=controlar_leds)
 leds_thread.start()
