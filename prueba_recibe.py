@@ -34,7 +34,7 @@ def controlar_leds():
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
     if address == "/ch1":
-        valor_pwm = mapear_valor(float(args[0]), 0, 1, 0, 100)
+        valor_pwm = mapear_valor(int(args[0]), 0, 1, 0, 100)
         led1_pwm.ChangeDutyCycle(valor_pwm)
     elif address == "/ch2":
         valor_pwm = mapear_valor(float(args[0]), 0, 1, 0, 100)
