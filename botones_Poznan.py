@@ -11,7 +11,7 @@ SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 # Configura el cliente OSC
-client = SimpleUDPClient("192.168.1.38", 10000)  # Cambia la dirección y el puerto según tus necesidades
+client = SimpleUDPClient("192.168.1.33", 10000)  # Cambia la dirección y el puerto según tus necesidades
 
 # Configura los pines GPIO de los botones
 BOTONES = [13, 26, 27, 21, 20, 16]  # Añade los nuevos pines aquí
