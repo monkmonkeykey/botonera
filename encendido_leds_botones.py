@@ -16,15 +16,16 @@ for pin in pwm_pins:
 # Configurar PWM en los pines con una frecuencia de 1000 Hz
 pwms = [GPIO.PWM(pin, 1000) for pin in pwm_pins]
 
-# Iniciar PWM con un ciclo de trabajo del 0%
+# Iniciar PWM con un ciclo de trabajo del 50%
 for pwm in pwms:
-    pwm.start(0)
+    pwm.start(50)
 
 def set_led_intensity(unused_addr, pin_index, intensity):
     """Función para ajustar la intensidad del LED."""
     if 0 <= pin_index < len(pwms):
         intensity = max(0, min(100, intensity))  # Asegurarse de que la intensidad esté entre 0 y 100
         pwms[pin_index].ChangeDutyCycle(intensity)
+    print(f"Recibido: Pin {pin_index}, Intensidad {intensity}")
 
 # Configurar el dispatcher para manejar los mensajes OSC
 dispatcher = dispatcher.Dispatcher()
