@@ -20,16 +20,18 @@ pwms = [GPIO.PWM(pin, 1000) for pin in pwm_pins]
 for pwm in pwms:
     pwm.start(50)
 
-def set_led_intensity(unused_addr, pin_index, intensity):
+def set_led_intensity(unused_addr, led_index, intensity):
     """Función para ajustar la intensidad del LED."""
-    if 0 <= pin_index < len(pwms):
+    led_index = led_index - 1  # Ajustar el índice del LED para que sea 0-indexed
+    if 0 <= led_index < len(pwms):
         intensity = max(0, min(100, intensity))  # Asegurarse de que la intensidad esté entre 0 y 100
-        pwms[pin_index].ChangeDutyCycle(intensity)
-    print(f"Recibido: Pin {pin_index}, Intensidad {intensity}")
+        pwms[led_index].ChangeDutyCycle(intensity)
+    print(f"Recibido: LED {led_index + 1}, Intensidad {intensity}")
 
 # Configurar el dispatcher para manejar los mensajes OSC
 dispatcher = dispatcher.Dispatcher()
-dispatcher.map("/led", set_led_intensity)  # Asignar la dirección OSC /led a la función set_led_intensity
+for i in range(len(pwm_pins)):
+    dispatcher.map(f"/led{i+1}", set_led_intensity)  # Asignar la dirección OSC a la función set_led_intensity
 
 # Configurar el servidor OSC
 ip = "0.0.0.0"  # Escuchar en todas las interfaces
