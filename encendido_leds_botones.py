@@ -20,9 +20,9 @@ pwms = [GPIO.PWM(pin, 1000) for pin in pwm_pins]
 for pwm in pwms:
     pwm.start(50)
 
-def set_led_intensity(unused_addr, led_index, intensity):
+def set_led_intensity(addr, led, intensity):
     """Función para ajustar la intensidad del LED."""
-    led_index = led_index - 1  # Ajustar el índice del LED para que sea 0-indexed
+    led_index = int(led[3:]) - 1  # Extraer el número del LED de la dirección OSC y convertirlo a índice
     if 0 <= led_index < len(pwms):
         intensity = max(0, min(100, intensity))  # Asegurarse de que la intensidad esté entre 0 y 100
         pwms[led_index].ChangeDutyCycle(intensity)
