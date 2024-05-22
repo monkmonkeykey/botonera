@@ -3,6 +3,9 @@ from pythonosc import dispatcher, osc_server
 import time
 import RPi.GPIO as GPIO
 
+# Desactiva las advertencias de GPIO
+GPIO.setwarnings(False)
+
 # Configuración de los pines GPIO para los LEDs
 LED_PIN_1 = 18  # Pin GPIO para LED 1
 LED_PIN_2 = 23  # Pin GPIO para LED 2
@@ -25,11 +28,6 @@ led3_pwm.start(0)
 def mapear_valor(valor, valor_minimo1, valor_maximo1, valor_minimo2, valor_maximo2):
     valor_mapeado = (valor - valor_minimo1) * (valor_maximo2 - valor_minimo2) / (valor_maximo1 - valor_minimo1) + valor_minimo2
     return valor_mapeado
-
-# Función para controlar los LEDs (se puede ajustar según sea necesario)
-def controlar_leds():
-    while True:
-        time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
