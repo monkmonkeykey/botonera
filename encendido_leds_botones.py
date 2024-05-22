@@ -3,6 +3,9 @@ import time
 import threading
 from pythonosc import dispatcher, osc_server
 
+# Configurar el modo de numeración de los pines (BCM)
+GPIO.setmode(GPIO.BCM)
+
 # Configuración de los pines GPIO para los LEDs RGB
 led_pins = {"r": 18, "g": 19, "b": 20}  # Mapeo de colores a pines GPIO
 for pin in led_pins.values():
@@ -11,27 +14,26 @@ for pin in led_pins.values():
 # Configurar PWM en los pines
 pwms = {color: GPIO.PWM(pin, 100) for color, pin in led_pins.items()}
 for pwm in pwms.values():
-    pwm.start(0)  # Iniciar con ciclo de trabajo del 0%
+    pwm.start(50)  # Iniciar con ciclo de trabajo del 50%
 
 # Función para controlar los LEDs con PWM
 def controlar_leds():
     global pwms
     while True:
         # Tu lógica para controlar los LEDs aquí
-        # Por ejemplo, puedes actualizar los valores de duty_cycle de los LEDs aquí
         time.sleep(0.01)  # Asegúrate de agregar un pequeño retraso para evitar que el hilo consuma demasiada CPU
 
 # Función para manejar los mensajes OSC
 def manejar_led(address, *args):
     global pwms
     if address == "/ch1":
-        pwm_value = int(args[0]) * 2.55  # Escalar el valor de 0-100 a 0-255
+        pwm_value = int(args[0]) * 100 / 255  # Convertir de 0-255 a 0-100
         pwms["r"].ChangeDutyCycle(pwm_value)
     elif address == "/ch2":
-        pwm_value = int(args[0]) * 2.55
+        pwm_value = int(args[0]) * 100 / 255
         pwms["g"].ChangeDutyCycle(pwm_value)
     elif address == "/ch3":
-        pwm_value = int(args[0]) * 2.55
+        pwm_value = int(args[0]) * 100 / 255
         pwms["b"].ChangeDutyCycle(pwm_value)
     elif address == "/h":
         # Tu lógica para manejar los datos de hora
