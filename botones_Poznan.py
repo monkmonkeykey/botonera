@@ -17,7 +17,7 @@ client = SimpleUDPClient("192.168.1.33", 10000)  # Cambia la dirección y el pue
 BOTONES = [13, 26, 27, 21, 20, 16]  # Añade los nuevos pines aquí
 
 buttons = [Button(pin, pull_up=True) for pin in BOTONES]
-
+print('Ha iniciado')
 # Define una función para enviar un mensaje OSC
 def enviar_mensaje_osc(address, *args):
     client.send_message(address, args)
